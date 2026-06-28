@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 :root {
   color-scheme: light;
   --paper: #f6f8f7;
@@ -152,6 +154,7 @@ h1 {
   max-width: 900px;
   margin-bottom: 18px;
   font-size: 4.35rem;
+  font-weight: 850;
   line-height: 0.98;
 }
 
@@ -159,12 +162,14 @@ h2 {
   max-width: 760px;
   margin-bottom: 0;
   font-size: 2.25rem;
+  font-weight: 800;
   line-height: 1.1;
 }
 
 h3 {
   margin-bottom: 10px;
   font-size: 1.15rem;
+  font-weight: 800;
   line-height: 1.25;
 }
 
@@ -196,6 +201,72 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
+}
+
+.hero-signal {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  box-shadow: 0 16px 44px rgba(31, 36, 33, 0.08);
+}
+
+.hero-signal__header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.hero-signal__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.hero-signal button {
+  display: grid;
+  min-height: 82px;
+  align-content: center;
+  gap: 4px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+.hero-signal button:hover,
+.hero-signal button:focus-visible,
+.hero-signal button.is-active {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+}
+
+.hero-signal button.is-active {
+  transform: translateY(-1px);
+}
+
+.hero-signal span {
+  font-weight: 900;
+}
+
+.hero-signal small {
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.35;
 }
 
 .primary-link,
@@ -690,6 +761,10 @@ h3 {
     align-items: stretch;
     flex-direction: column;
     width: 100%;
+  }
+
+  .hero-signal__grid {
+    grid-template-columns: 1fr;
   }
 
   .primary-link,
