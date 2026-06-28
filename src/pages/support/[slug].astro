@@ -1,13 +1,6 @@
 ---
-import CTA from '../../components/CTA.astro';
-import SiteLayout from '../../layouts/SiteLayout.astro';
-import type { AppInfo } from '../../data/apps';
+import SupportDetailContent from '../../components/pages/SupportDetailContent.astro';
 import { apps } from '../../data/apps';
-import { mailto, site } from '../../data/site';
-
-interface Props {
-  app: AppInfo;
-}
 
 export function getStaticPaths() {
   return apps.map((app) => ({ params: { slug: app.slug }, props: { app } }));
@@ -16,51 +9,4 @@ export function getStaticPaths() {
 const { app } = Astro.props;
 ---
 
-<SiteLayout
-  title={`Support for ${app.name} — Sergio Anastacio`}
-  description={`Soporte, preguntas frecuentes e incidencias conocidas de ${app.name}.`}
-  path={`/support/${app.slug}`}
->
-  <section class="page-hero">
-    <p class="eyebrow">App Support</p>
-    <h1>Support for {app.name}</h1>
-    <p>Información de soporte, preguntas frecuentes y enlaces legales de la app.</p>
-  </section>
-
-  <section class="section two-panel">
-    <div>
-      <p class="section-kicker">FAQ</p>
-      <h2>Preguntas comunes.</h2>
-    </div>
-    <div class="faq-list">
-      {app.faq.map((item) => <article><h3>{item.question}</h3><p>{item.answer}</p></article>)}
-    </div>
-  </section>
-
-  <section class="section section-tint">
-    <div class="section-heading">
-      <p class="section-kicker">Known Issues</p>
-      <h2>Incidencias conocidas.</h2>
-    </div>
-    <ul class="clean-list">{app.knownIssues.map((issue) => <li>{issue}</li>)}</ul>
-  </section>
-
-  <section class="section">
-    <div class="section-heading">
-      <p class="section-kicker">Links</p>
-      <h2>Privacidad y términos.</h2>
-    </div>
-    <div class="link-grid">
-      <a href={`/privacy/${app.slug}`}>Privacy Policy</a>
-      <a href={`/terms/${app.slug}`}>Terms of Use</a>
-      <a href={`/apps/${app.slug}`}>App Website</a>
-    </div>
-  </section>
-
-  <CTA
-    title={`Contactar soporte de ${app.name}`}
-    body="Incluye plataforma, versión de la app si la conoces, pasos para reproducir el problema y capturas si aplica."
-    primaryHref={mailto(site.emails.support, `Soporte ${app.name}`)}
-    primaryLabel={site.emails.support}
-  />
-</SiteLayout>
+<SupportDetailContent app={app} />

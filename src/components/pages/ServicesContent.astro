@@ -1,0 +1,59 @@
+---
+import CTA from '../CTA.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { mailto, site } from '../../data/site';
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const lp = (p: string) => getLocalizedPath(p, lang);
+
+const services = [
+  { title: t('home.services.1.title'), body: lang === 'en'
+    ? 'iOS and Android apps focused on clean architecture, API integration, authentication and scalable publishing.'
+    : 'Aplicaciones iOS y Android enfocadas en arquitectura limpia, integración de APIs, autenticación y publicación escalable.' },
+  { title: lang === 'en' ? 'Backend APIs with .NET' : 'Backend APIs con .NET', body: lang === 'en'
+    ? 'Robust APIs with C#, .NET, PostgreSQL, authentication, observability and deployment automation.'
+    : 'APIs robustas con C#, .NET, PostgreSQL, autenticación, observabilidad y automatización de despliegue.' },
+  { title: lang === 'en' ? 'Cloud & DevOps Automation' : 'Cloud & DevOps Automation', body: lang === 'en'
+    ? 'Docker, GitHub Actions, Kubernetes, Cloudflare and pipelines connecting code, config and delivery.'
+    : 'Docker, GitHub Actions, Kubernetes, Cloudflare y pipelines que conectan código, configuración y entrega.' },
+  { title: lang === 'en' ? 'AI Integration' : 'Integración de IA', body: lang === 'en'
+    ? 'Integration of AI models and APIs for support, analysis, internal assistants and operational automation.'
+    : 'Integración de modelos y APIs de IA para soporte, análisis, asistentes internos y automatización operativa.' },
+  { title: lang === 'en' ? 'Software Architecture' : 'Arquitectura de Software', body: lang === 'en'
+    ? 'Technical design for products that need to grow without losing clarity, traceability or maintainability.'
+    : 'Diseño técnico para productos que necesitan crecer sin perder claridad, trazabilidad ni mantenibilidad.' },
+  { title: lang === 'en' ? 'Technical Consulting' : 'Consultoría Técnica', body: lang === 'en'
+    ? 'Support to diagnose problems, define a technical roadmap and turn ideas into shippable deliverables.'
+    : 'Acompañamiento para diagnosticar problemas, definir ruta técnica y convertir ideas en entregables publicables.' },
+];
+---
+
+<SiteLayout
+  title={lang === 'en' ? 'Services — Sergio Anastacio' : 'Servicios — Sergio Anastacio'}
+  description={t('services.hero.copy')}
+  path={Astro.url.pathname}
+>
+  <section class="page-hero">
+    <p class="eyebrow">{t('services.hero.eyebrow')}</p>
+    <h1>{t('services.hero.title')}</h1>
+    <p>{t('services.hero.copy')}</p>
+  </section>
+
+  <section class="section compact-section">
+    <div class="feature-grid">
+      {services.map((service) => <article class="feature-card"><h2>{service.title}</h2><p>{service.body}</p></article>)}
+    </div>
+  </section>
+
+  <CTA
+    kicker={t('services.cta.kicker')}
+    title={t('services.cta.title')}
+    body={t('services.cta.body')}
+    primaryHref={mailto(site.emails.contact, lang === 'en' ? 'Software services' : 'Servicios de software')}
+    primaryLabel={site.emails.contact}
+    secondaryHref={lp('/portfolio')}
+    secondaryLabel={t('services.cta.secondary')}
+  />
+</SiteLayout>

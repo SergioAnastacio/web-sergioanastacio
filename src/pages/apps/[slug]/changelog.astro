@@ -1,11 +1,6 @@
 ---
-import SiteLayout from '../../../layouts/SiteLayout.astro';
-import type { AppInfo } from '../../../data/apps';
+import ChangelogContent from '../../../components/pages/ChangelogContent.astro';
 import { apps } from '../../../data/apps';
-
-interface Props {
-  app: AppInfo;
-}
 
 export function getStaticPaths() {
   return apps.map((app) => ({ params: { slug: app.slug }, props: { app } }));
@@ -14,30 +9,4 @@ export function getStaticPaths() {
 const { app } = Astro.props;
 ---
 
-<SiteLayout
-  title={`${app.name} Changelog — Sergio Anastacio Apps`}
-  description={`Historial de versiones, cambios y mejoras de ${app.name}.`}
-  path={`/apps/${app.slug}/changelog`}
->
-  <section class="page-hero">
-    <p class="eyebrow">Changelog</p>
-    <h1>{app.name} Changelog</h1>
-    <p>Historial público de versiones, cambios, correcciones y mejoras.</p>
-  </section>
-
-  <section class="section compact-section">
-    <div class="timeline-list">
-      {
-        app.changelog.map((release) => (
-          <article class="timeline-item">
-            <p class="status-pill">{release.released}</p>
-            <h2>Version {release.version}</h2>
-            <ul>
-              {release.changes.map((change) => <li>{change}</li>)}
-            </ul>
-          </article>
-        ))
-      }
-    </div>
-  </section>
-</SiteLayout>
+<ChangelogContent app={app} />

@@ -1,0 +1,134 @@
+---
+import AppCard from '../AppCard.astro';
+import CTA from '../CTA.astro';
+import HeroSignal from '../react/HeroSignal';
+import ProjectCard from '../ProjectCard.astro';
+import SectionReveal from '../SectionReveal.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { apps } from '../../data/apps';
+import { projects } from '../../data/projects';
+import { mailto, site } from '../../data/site';
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const lp = (p: string) => getLocalizedPath(p, lang);
+
+const featuredApps = apps.slice(0, 3);
+const featuredProjects = projects.slice(0, 2);
+---
+
+<SiteLayout title={site.title} description={site.description} path={Astro.url.pathname}>
+  <SectionReveal />
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-inner">
+      <img
+        class="profile-photo"
+        src={site.avatarUrl}
+        alt="Sergio Anastacio"
+        width="160"
+        height="160"
+        decoding="async"
+        fetchpriority="high"
+      />
+      <p class="eyebrow">{t('home.hero.eyebrow')}</p>
+      <h1 id="hero-title">{t('home.hero.title')}</h1>
+      <p class="hero-copy">{t('home.hero.copy')}</p>
+      <div class="hero-actions" aria-label={t('nav.contact')}>
+        <a class="primary-link" href={lp('/apps')}>{t('home.hero.cta.apps')}</a>
+        <a class="secondary-link" href={lp('/contact')}>{t('home.hero.cta.contact')}</a>
+      </div>
+      <HeroSignal client:visible />
+    </div>
+  </section>
+
+  <section class="section reveal" data-reveal aria-labelledby="summary-title">
+    <div class="section-heading split-heading">
+      <div>
+        <p class="section-kicker">{t('home.summary.kicker')}</p>
+        <h2 id="summary-title">{t('home.summary.title')}</h2>
+      </div>
+      <p>{t('home.summary.copy')}</p>
+    </div>
+    <div class="feature-grid">
+      <article class="feature-card">
+        <h3>{t('home.summary.mobile')}</h3>
+        <p>{t('home.summary.mobile.copy')}</p>
+      </article>
+      <article class="feature-card">
+        <h3>{t('home.summary.cloud')}</h3>
+        <p>{t('home.summary.cloud.copy')}</p>
+      </article>
+      <article class="feature-card">
+        <h3>{t('home.summary.ai')}</h3>
+        <p>{t('home.summary.ai.copy')}</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section-tint reveal" data-reveal aria-labelledby="apps-title">
+    <div class="section-heading split-heading">
+      <div>
+        <p class="section-kicker">{t('home.apps.kicker')}</p>
+        <h2 id="apps-title">{t('home.apps.title')}</h2>
+      </div>
+      <a class="secondary-link" href={lp('/apps')}>{t('home.apps.cta')}</a>
+    </div>
+    <div class="resource-grid">
+      {featuredApps.map((app) => <AppCard app={app} />)}
+    </div>
+  </section>
+
+  <section class="section reveal" data-reveal aria-labelledby="services-title">
+    <div class="section-heading">
+      <p class="section-kicker">{t('home.services.kicker')}</p>
+      <h2 id="services-title">{t('home.services.title')}</h2>
+    </div>
+    <div class="work-list">
+      <article class="work-item">
+        <span class="work-index">01</span>
+        <div>
+          <h3>{t('home.services.1.title')}</h3>
+          <p>{t('home.services.1.copy')}</p>
+        </div>
+      </article>
+      <article class="work-item">
+        <span class="work-index">02</span>
+        <div>
+          <h3>{t('home.services.2.title')}</h3>
+          <p>{t('home.services.2.copy')}</p>
+        </div>
+      </article>
+      <article class="work-item">
+        <span class="work-index">03</span>
+        <div>
+          <h3>{t('home.services.3.title')}</h3>
+          <p>{t('home.services.3.copy')}</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section-tint reveal" data-reveal aria-labelledby="portfolio-title">
+    <div class="section-heading split-heading">
+      <div>
+        <p class="section-kicker">{t('home.portfolio.kicker')}</p>
+        <h2 id="portfolio-title">{t('home.portfolio.title')}</h2>
+      </div>
+      <a class="secondary-link" href={lp('/portfolio')}>{t('home.portfolio.cta')}</a>
+    </div>
+    <div class="resource-grid two-columns">
+      {featuredProjects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </section>
+
+  <CTA
+    kicker={t('home.cta.kicker')}
+    title={t('home.cta.title')}
+    body={t('home.cta.body')}
+    primaryHref={mailto(site.emails.contact, 'Contacto desde sergioanastacio.com')}
+    primaryLabel={site.emails.contact}
+    secondaryHref={lp('/contact')}
+    secondaryLabel={t('home.cta.secondary')}
+  />
+</SiteLayout>

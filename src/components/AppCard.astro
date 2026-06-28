@@ -1,16 +1,23 @@
 ---
 import type { AppInfo } from '../data/apps';
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../i18n/utils';
 
 interface Props {
   app: AppInfo;
 }
 
 const { app } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const lp = (p: string) => getLocalizedPath(p, lang);
+const statusClass = app.concept ? 'concept-pill' : 'status-pill';
+const statusData = app.concept ? 'Concept' : app.status;
+const statusLabel = app.concept ? t('concept.badge') : app.status;
 ---
 
 <article class="resource-card">
   <div class="card-header">
-    <p class="status-pill">{app.status}</p>
+    <p class={statusClass} data-status={statusData}>{statusLabel}</p>
     <h2>{app.name}</h2>
   </div>
   <p>{app.description}</p>
@@ -18,8 +25,8 @@ const { app } = Astro.props;
     {app.platforms.map((platform) => <span>{platform}</span>)}
   </div>
   <div class="card-links">
-    <a href={`/apps/${app.slug}`}>View App</a>
-    <a href={`/privacy/${app.slug}`}>Privacy</a>
-    <a href={`/support/${app.slug}`}>Support</a>
+    <a href={lp(`/apps/${app.slug}`)}>{t('card.viewapp')}</a>
+    <a href={lp(`/privacy/${app.slug}`)}>{t('card.privacy')}</a>
+    <a href={lp(`/support/${app.slug}`)}>{t('card.support')}</a>
   </div>
 </article>

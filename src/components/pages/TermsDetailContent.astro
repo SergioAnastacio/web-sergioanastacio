@@ -1,0 +1,56 @@
+---
+import CTA from '../CTA.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import type { AppInfo } from '../../data/apps';
+import { mailto, site } from '../../data/site';
+import { getLangFromUrl, getLocalizedPath } from '../../i18n/utils';
+
+interface Props {
+  app: AppInfo;
+}
+
+const { app } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const en = lang === 'en';
+const lp = (p: string) => getLocalizedPath(p, lang);
+---
+
+<SiteLayout
+  title={`Terms of Use for ${app.name} — Sergio Anastacio`}
+  description={en ? `Terms of use for ${app.name}.` : `Términos de uso para ${app.name}.`}
+  path={Astro.url.pathname}
+>
+  <section class="page-hero">
+    <p class="eyebrow">{en ? 'Terms of Use' : 'Términos de Uso'}</p>
+    <h1>{en ? 'Terms of Use for' : 'Términos de Uso de'} {app.name}</h1>
+    <p>{en ? 'Last updated:' : 'Última actualización:'} {app.terms.lastUpdated}</p>
+  </section>
+
+  <section class="section legal-copy">
+    <h2>{en ? 'Acceptance of terms' : 'Aceptación de términos'}</h2>
+    <p>{app.terms.summary}</p>
+    <h2>{en ? 'Use of the app' : 'Uso de la app'}</h2>
+    <ul>{app.terms.usage.map((item) => <li>{item}</li>)}</ul>
+    <h2>{en ? 'Accounts' : 'Cuentas'}</h2>
+    <p>{app.terms.accounts}</p>
+    <h2>{en ? 'Subscriptions and payments' : 'Suscripciones y pagos'}</h2>
+    <p>{app.terms.subscriptions}</p>
+    <h2>{en ? 'Limitations' : 'Limitaciones'}</h2>
+    <p>{app.terms.limitations}</p>
+    <h2>{en ? 'Changes and contact' : 'Cambios y contacto'}</h2>
+    <p>
+      {en
+        ? 'These terms may be updated as the product evolves. For questions write to '
+        : 'Estos términos pueden actualizarse conforme el producto avance. Para preguntas escribe a '}
+      <a href={mailto(site.emails.apps, `Términos ${app.name}`)}>{site.emails.apps}</a>.
+    </p>
+  </section>
+
+  <CTA
+    title={en ? 'Need support?' : '¿Necesitas soporte?'}
+    primaryHref={lp(`/support/${app.slug}`)}
+    primaryLabel={en ? `Support for ${app.name}` : `Soporte de ${app.name}`}
+    secondaryHref={lp(`/privacy/${app.slug}`)}
+    secondaryLabel={en ? 'Privacy Policy' : 'Política de Privacidad'}
+  />
+</SiteLayout>

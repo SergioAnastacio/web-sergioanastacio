@@ -27,7 +27,7 @@ export default function HeroSignal() {
   }, []);
 
   return (
-    <div className="hero-signal mt-8 max-w-3xl" aria-label="Áreas activas">
+    <div className="hero-signal max-w-3xl" aria-label="Áreas activas">
       <div className="hero-signal__header">
         <span>Active build areas</span>
         <span>Static-first Astro</span>
