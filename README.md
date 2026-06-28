@@ -73,3 +73,17 @@ CNAME  www  SergioAnastacio.github.io
 ```
 
 Durante la validacion inicial en GitHub Pages conviene dejar esos registros como `DNS only`.
+
+## Correo
+
+El correo del dominio se gestiona con Zoho Mail.
+
+Direcciones publicadas por el sitio:
+
+```text
+contacto@sergioanastacio.com
+soporte@sergioanastacio.com
+apps@sergioanastacio.com
+```
+
+Los registros de correo (MX, SPF, DKIM y DMARC cuando aplique) deben mantenerse en Cloudflare DNS según lo indicado por Zoho Admin Console.

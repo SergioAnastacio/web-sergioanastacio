@@ -12,16 +12,16 @@ const t = useTranslations(lang);
 const lp = (p: string) => getLocalizedPath(p, lang);
 ---
 
-<article class="resource-card">
-  <div class="card-header">
-    <p class="status-pill">{project.type}</p>
-    <h2>{project.name}</h2>
-  </div>
-  <p>{project.summary}</p>
-  <div class="meta-row" aria-label={lang === 'en' ? `Stack for ${project.name}` : `Stack para ${project.name}`}>
-    {project.stack.slice(0, 4).map((item) => <span>{item}</span>)}
-  </div>
-  <div class="card-links">
-    <a href={lp(`/portfolio/${project.slug}`)}>{t('card.casestudy')}</a>
-  </div>
-</article>
+  <article class="resource-card project-card">
+    <div class="card-header">
+      <p class="status-pill">{project.type}</p>
+      <h3 class="h4"><a href={lp(`/portfolio/${project.slug}`)}>{project.name}</a></h3>
+    </div>
+    <p>{project.summary}</p>
+    <div class="meta-row" aria-label={lang === 'en' ? `Stack for ${project.name}` : `Stack para ${project.name}`}>
+      {project.stack.slice(0, 4).map((item) => <span>{item}</span>)}
+    </div>
+    <div class="card-links">
+      <a href={lp(`/portfolio/${project.slug}`)}>{t('card.casestudy')}</a>
+    </div>
+  </article>

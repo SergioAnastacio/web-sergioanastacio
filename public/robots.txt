@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /404
+Disallow: /en/404
 
 Sitemap: https://sergioanastacio.com/sitemap-index.xml
+Host: https://sergioanastacio.com
