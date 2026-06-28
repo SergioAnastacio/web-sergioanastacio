@@ -1,0 +1,133 @@
+---
+import '../styles/global.css';
+
+const title = 'Sergio Anastacio | Software, automatización y web';
+const description =
+  'Sitio personal de Sergio Anastacio: software, automatización, plataformas web y despliegues confiables.';
+const githubUrl = 'https://github.com/SergioAnastacio';
+const avatarUrl = 'https://github.com/SergioAnastacio.png?size=320';
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content="#f8f5ed" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href="https://sergionastacio.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content="https://sergionastacio.com/" />
+    <meta property="og:image" content={avatarUrl} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={avatarUrl} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="site-header" aria-label="Principal">
+      <a class="brand" href="/" aria-label="Inicio de Sergio Anastacio">SA</a>
+      <nav class="nav-links" aria-label="Navegación principal">
+        <a href="#enfoque">Enfoque</a>
+        <a href="#proyectos">Proyectos</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-inner">
+          <img
+            class="profile-photo"
+            src={avatarUrl}
+            alt="Sergio Anastacio"
+            width="160"
+            height="160"
+            decoding="async"
+            fetchpriority="high"
+          />
+          <p class="eyebrow">Software, automatización y web</p>
+          <h1 id="hero-title">Sergio Anastacio</h1>
+          <p class="hero-copy">
+            Construyo soluciones digitales claras: productos web, automatizaciones y despliegues pensados
+            para operar con confianza.
+          </p>
+          <div class="hero-actions" aria-label="Acciones principales">
+            <a class="primary-link" href={githubUrl} rel="me noopener" target="_blank">Ver GitHub</a>
+            <a class="secondary-link" href="#contacto">Contacto</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="enfoque" aria-labelledby="focus-title">
+        <div class="section-heading">
+          <p class="section-kicker">Enfoque</p>
+          <h2 id="focus-title">Trabajo con sistemas útiles, rápidos y mantenibles.</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>Productos web</h3>
+            <p>Interfaces enfocadas en claridad, rendimiento y flujos que la gente puede usar todos los días.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Automatización</h3>
+            <p>Procesos repetibles para reducir fricción entre repositorios, validaciones y entregas.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Despliegues</h3>
+            <p>Publicación continua con configuración visible, ramas limpias y evidencia de cada cambio.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section work-section" id="proyectos" aria-labelledby="work-title">
+        <div class="section-heading">
+          <p class="section-kicker">Proyectos</p>
+          <h2 id="work-title">Áreas donde concentro mi trabajo.</h2>
+        </div>
+        <div class="work-list">
+          <article class="work-item">
+            <span class="work-index">01</span>
+            <div>
+              <h3>Aplicaciones internas</h3>
+              <p>Herramientas para equipos que necesitan operar, revisar información y tomar decisiones sin ruido.</p>
+            </div>
+          </article>
+          <article class="work-item">
+            <span class="work-index">02</span>
+            <div>
+              <h3>Integraciones</h3>
+              <p>Conexiones entre servicios, APIs y flujos de trabajo que mantienen el contexto técnico trazable.</p>
+            </div>
+          </article>
+          <article class="work-item">
+            <span class="work-index">03</span>
+            <div>
+              <h3>Sitios estáticos</h3>
+              <p>Experiencias ligeras, publicadas con GitHub Pages y preparadas para dominios propios.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="contact-band" id="contacto" aria-labelledby="contact-title">
+        <div>
+          <p class="section-kicker">Contacto</p>
+          <h2 id="contact-title">Puedes encontrarme en GitHub.</h2>
+        </div>
+        <a class="primary-link dark" href={githubUrl} rel="me noopener" target="_blank">
+          github.com/SergioAnastacio
+        </a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>&copy; {new Date().getFullYear()} Sergio Anastacio</span>
+      <span>Construido con Astro y publicado con GitHub Pages.</span>
+    </footer>
+  </body>
+</html>
