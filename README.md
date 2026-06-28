@@ -28,7 +28,6 @@ Rutas principales:
 /portfolio
 /portfolio/{case-study-slug}
 /services
-/workana
 /about
 /contact
 /support

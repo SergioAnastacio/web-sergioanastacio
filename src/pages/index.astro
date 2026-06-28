@@ -1,6 +1,7 @@
 ---
 import AppCard from '../components/AppCard.astro';
 import CTA from '../components/CTA.astro';
+import HeroSignal from '../components/react/HeroSignal';
 import ProjectCard from '../components/ProjectCard.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import { apps } from '../data/apps';
@@ -33,6 +34,7 @@ const featuredProjects = projects.slice(0, 2);
         <a class="primary-link" href="/apps">View Apps</a>
         <a class="secondary-link" href="/contact">Contact Me</a>
       </div>
+      <HeroSignal client:visible />
     </div>
   </section>
 
