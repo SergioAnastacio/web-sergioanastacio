@@ -3,7 +3,7 @@ import CTA from '../CTA.astro';
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import type { AppInfo } from '../../data/apps';
 import { mailto, site } from '../../data/site';
-import { getLangFromUrl, getLocalizedPath } from '../../i18n/utils';
+import { getLangFromUrl, getLocalizedPath, formatDate } from '../../i18n/utils';
 
 interface Props {
   app: AppInfo;
@@ -23,7 +23,7 @@ const lp = (p: string) => getLocalizedPath(p, lang);
   <section class="page-hero">
     <p class="eyebrow">{en ? 'Terms of Use' : 'Términos de Uso'}</p>
     <h1>{en ? 'Terms of Use for' : 'Términos de Uso de'} {app.name}</h1>
-    <p>{en ? 'Last updated:' : 'Última actualización:'} {app.terms.lastUpdated}</p>
+    <p>{en ? 'Last updated:' : 'Última actualización:'} {formatDate(app.terms.lastUpdated, lang)}</p>
   </section>
 
   <section class="section legal-copy">
@@ -40,8 +40,8 @@ const lp = (p: string) => getLocalizedPath(p, lang);
     <h2>{en ? 'Changes and contact' : 'Cambios y contacto'}</h2>
     <p>
       {en
-        ? 'These terms may be updated as the product evolves. For questions write to '
-        : 'Estos términos pueden actualizarse conforme el producto avance. Para preguntas escribe a '}
+        ? 'These terms may be updated as the product evolves. The most current version is always available on this page. For questions, write to '
+        : 'Estos términos pueden actualizarse conforme el producto evolucione. La versión vigente está siempre disponible en esta página. Para preguntas, escribe a '}
       <a href={mailto(site.emails.apps, `Términos ${app.name}`)}>{site.emails.apps}</a>.
     </p>
   </section>

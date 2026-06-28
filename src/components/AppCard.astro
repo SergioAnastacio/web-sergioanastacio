@@ -21,7 +21,7 @@ const statusLabel = app.concept ? t('concept.badge') : app.status;
     <h2>{app.name}</h2>
   </div>
   <p>{app.description}</p>
-  <div class="meta-row" aria-label={`Plataformas para ${app.name}`}>
+  <div class="meta-row" aria-label={lang === 'en' ? `Platforms for ${app.name}` : `Plataformas para ${app.name}`}>
     {app.platforms.map((platform) => <span>{platform}</span>)}
   </div>
   <div class="card-links">

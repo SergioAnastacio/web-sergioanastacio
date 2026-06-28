@@ -18,7 +18,7 @@ const lp = (p: string) => getLocalizedPath(p, lang);
     <h2>{project.name}</h2>
   </div>
   <p>{project.summary}</p>
-  <div class="meta-row" aria-label={`Stack para ${project.name}`}>
+  <div class="meta-row" aria-label={lang === 'en' ? `Stack for ${project.name}` : `Stack para ${project.name}`}>
     {project.stack.slice(0, 4).map((item) => <span>{item}</span>)}
   </div>
   <div class="card-links">

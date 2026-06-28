@@ -32,7 +32,12 @@ const lp = (p: string) => getLocalizedPath(p, lang);
       <h2>{en ? 'Common questions.' : 'Preguntas comunes.'}</h2>
     </div>
     <div class="faq-list">
-      {app.faq.map((item) => <article><h3>{item.question}</h3><p>{item.answer}</p></article>)}
+      {app.faq.map((item) => (
+        <article>
+          <h3>{en && item.questionEn ? item.questionEn : item.question}</h3>
+          <p>{en && item.answerEn ? item.answerEn : item.answer}</p>
+        </article>
+      ))}
     </div>
   </section>
 
