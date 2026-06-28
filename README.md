@@ -21,9 +21,26 @@ npm run preview
 El dominio configurado para GitHub Pages es:
 
 ```text
-sergionastacio.com
+sergioanastacio.com
 ```
 
 El archivo `public/CNAME` conserva esa configuración dentro del artefacto publicado.
 
 En GitHub, configura `Settings > Pages > Source` con `GitHub Actions`.
+
+En Cloudflare DNS, configura el dominio raiz con registros `A` hacia GitHub Pages:
+
+```text
+A  @  185.199.108.153
+A  @  185.199.109.153
+A  @  185.199.110.153
+A  @  185.199.111.153
+```
+
+Y configura `www` como:
+
+```text
+CNAME  www  SergioAnastacio.github.io
+```
+
+Durante la validacion inicial en GitHub Pages conviene dejar esos registros como `DNS only`.
