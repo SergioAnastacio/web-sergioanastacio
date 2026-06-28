@@ -3,7 +3,7 @@ import CTA from '../CTA.astro';
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import type { AppInfo } from '../../data/apps';
 import { mailto, site } from '../../data/site';
-import { getLangFromUrl, getLocalizedPath } from '../../i18n/utils';
+import { getLangFromUrl, getLocalizedPath, formatDate } from '../../i18n/utils';
 
 interface Props {
   app: AppInfo;
@@ -23,7 +23,7 @@ const lp = (p: string) => getLocalizedPath(p, lang);
   <section class="page-hero">
     <p class="eyebrow">{en ? 'Privacy Policy' : 'Política de Privacidad'}</p>
     <h1>{en ? 'Privacy Policy for' : 'Política de Privacidad de'} {app.name}</h1>
-    <p>{en ? 'Last updated:' : 'Última actualización:'} {app.privacy.lastUpdated}</p>
+    <p>{en ? 'Last updated:' : 'Última actualización:'} {formatDate(app.privacy.lastUpdated, lang)}</p>
   </section>
 
   <section class="section legal-copy">

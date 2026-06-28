@@ -25,9 +25,7 @@ const en = lang === 'en';
     <p>{app.tagline}</p>
     {
       app.concept && (
-        <p style="border:1px solid var(--line);border-radius:10px;padding:14px 18px;background:var(--surface);color:var(--muted);font-size:0.95rem;max-width:640px;">
-          {t('concept.notice')}
-        </p>
+        <p class="concept-notice">{t('concept.notice')}</p>
       )
     }
     <div class="hero-actions">
@@ -37,7 +35,7 @@ const en = lang === 'en';
             {en ? 'Download on the App Store' : 'Descargar en App Store'}
           </a>
         ) : (
-          <span class="disabled-link">{en ? 'App Store coming soon' : 'App Store próximamente'}</span>
+          <span class="disabled-link">{en ? 'App Store — link pending release' : 'App Store — enlace disponible al release'}</span>
         )
       }
       {
@@ -46,7 +44,7 @@ const en = lang === 'en';
             {en ? 'Get it on Google Play' : 'Disponible en Google Play'}
           </a>
         ) : (
-          <span class="disabled-link">{en ? 'Google Play coming soon' : 'Google Play próximamente'}</span>
+          <span class="disabled-link">{en ? 'Google Play — link pending release' : 'Google Play — enlace disponible al release'}</span>
         )
       }
     </div>
@@ -83,7 +81,12 @@ const en = lang === 'en';
       <h2 id="faq-title">{en ? 'Frequently asked questions.' : 'Preguntas frecuentes.'}</h2>
     </div>
     <div class="faq-list">
-      {app.faq.map((item) => <article><h3>{item.question}</h3><p>{item.answer}</p></article>)}
+      {app.faq.map((item) => (
+        <article>
+          <h3>{en && item.questionEn ? item.questionEn : item.question}</h3>
+          <p>{en && item.answerEn ? item.answerEn : item.answer}</p>
+        </article>
+      ))}
     </div>
   </section>
 

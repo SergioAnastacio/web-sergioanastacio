@@ -1,16 +1,22 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const en = lang === 'en';
+const lp = (p: string) => getLocalizedPath(p, lang);
 ---
 
 <SiteLayout
-  title="Página no encontrada | Sergio Anastacio"
-  description="La ruta solicitada no existe en sergioanastacio.com."
+  title={en ? 'Page not found | Sergio Anastacio' : 'Página no encontrada | Sergio Anastacio'}
+  description={en ? 'The requested route does not exist on sergioanastacio.com.' : 'La ruta solicitada no existe en sergioanastacio.com.'}
   noindex
 >
   <section class="not-found">
     <p class="eyebrow">404</p>
-    <h1>Página no encontrada</h1>
-    <p>La ruta que abriste no existe o fue movida.</p>
-    <a class="primary-link" href="/">Volver al inicio</a>
+    <h1>{en ? 'Page not found' : 'Página no encontrada'}</h1>
+    <p>{en ? 'The route you opened does not exist or has been moved.' : 'La ruta que abriste no existe o fue movida.'}</p>
+    <a class="primary-link" href={lp('/')}>{en ? 'Back to home' : 'Volver al inicio'}</a>
   </section>
 </SiteLayout>

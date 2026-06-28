@@ -676,6 +676,16 @@ h3 {
   background: var(--danger);
 }
 
+.concept-notice {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 18px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.95rem;
+  max-width: 640px;
+}
+
 .meta-row {
   display: flex;
   flex-wrap: wrap;
