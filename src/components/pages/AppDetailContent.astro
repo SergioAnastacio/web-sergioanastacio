@@ -53,14 +53,15 @@ const en = lang === 'en';
   <section class="section two-panel" aria-labelledby="app-overview">
     <div>
       <p class="section-kicker">{en ? 'Overview' : 'Resumen'}</p>
-      <h2 id="app-overview">{app.description}</h2>
+      <h2 id="app-overview">{en ? 'What it is' : 'Qué es'}</h2>
+      <p class="lead">{app.description}</p>
     </div>
     <div class="detail-panel">
-      <h3>{en ? 'Platform availability' : 'Plataformas'}</h3>
+      <h3 class="h5">{en ? 'Platform availability' : 'Plataformas'}</h3>
       <div class="meta-row">
         {app.platforms.map((platform) => <span>{platform}</span>)}
       </div>
-      <h3>{en ? 'Status' : 'Estado'}</h3>
+      <h3 class="h5">{en ? 'Status' : 'Estado'}</h3>
       <p>{statusLabel}</p>
     </div>
   </section>

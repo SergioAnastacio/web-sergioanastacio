@@ -1,8 +1,8 @@
 ---
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
-import { site } from '../data/site';
-import { getLangFromUrl } from '../i18n/utils';
+import { site, getSiteMeta, getAlternateUrls } from '../data/site';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
 import '@fontsource-variable/fraunces';
 import '@fontsource-variable/fraunces/wght-italic.css';
 import '@fontsource-variable/inter';
@@ -15,71 +15,153 @@ interface Props {
   path?: string;
   ogImage?: string;
   noindex?: boolean;
+  type?: 'website' | 'article' | 'profile';
+  datePublished?: string;
+  dateModified?: string;
+  tags?: string[];
+  author?: string;
+  section?: string;
 }
 
 const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const meta = getSiteMeta(lang);
+
 const {
-  title = site.title,
-  description = site.description,
+  title = meta.title,
+  description = meta.description,
   path = Astro.url.pathname,
-  ogImage = site.avatarUrl,
+  ogImage = site.ogImage,
   noindex = false,
+  type = 'website',
+  datePublished,
+  dateModified,
+  tags = [],
+  author = site.name,
+  section,
 } = Astro.props;
 
+const pageTitle = title === meta.title ? title : `${title} — ${site.name}`;
 const canonicalUrl = new URL(path, site.url).toString();
+const alternateUrls = getAlternateUrls(path);
+const ogImageUrl = new URL(ogImage, site.url).toString();
+
+const personSchema = {
+  '@type': 'Person',
+  '@id': `${site.url}/#person`,
+  name: site.name,
+  url: site.url,
+  image: site.avatarUrl,
+  jobTitle: meta.jobTitle,
+  sameAs: [site.githubUrl, site.linkedinUrl].filter(Boolean),
+};
+
+const websiteSchema = {
+  '@type': 'WebSite',
+  '@id': `${site.url}/#website`,
+  name: site.name,
+  url: site.url,
+  inLanguage: lang,
+  publisher: { '@id': `${site.url}/#person` },
+};
+
+const webPageSchema: Record<string, unknown> = {
+  '@type': 'WebPage',
+  '@id': canonicalUrl,
+  url: canonicalUrl,
+  name: pageTitle,
+  description,
+  inLanguage: lang,
+  isPartOf: { '@id': `${site.url}/#website` },
+  about: { '@id': `${site.url}/#person` },
+};
+
+if (datePublished) webPageSchema.datePublished = datePublished;
+if (dateModified) webPageSchema.dateModified = dateModified;
+
+const breadcrumbSchema = {
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: t('nav.home'),
+      item: site.url,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: title,
+      item: canonicalUrl,
+    },
+  ],
+};
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [personSchema, websiteSchema, webPageSchema, breadcrumbSchema],
+};
 ---
 
 <!doctype html>
 <html lang={lang}>
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="author" content={author} />
     <meta name="theme-color" content="#171513" />
+    <meta name="color-scheme" content="dark light" />
+
     <script is:inline>
       const stored = localStorage.getItem('theme');
       const theme = stored === 'light' || stored === 'dark' ? stored : 'dark';
       document.documentElement.setAttribute('data-theme', theme);
     </script>
-    {noindex && <meta name="robots" content="noindex" />}
+
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {!noindex && <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />}
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="canonical" href={canonicalUrl} />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content={title} />
+
+    {alternateUrls.map(({ locale, url }) => (
+      <link rel="alternate" hreflang={locale} href={url} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={alternateUrls.find(({ locale }) => locale === site.defaultLocale)?.url ?? canonicalUrl} />
+
+    <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_US'} />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:image" content={ogImage} />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content={title} />
+    <meta property="og:site_name" content={site.name} />
+    {section && <meta property="og:section" content={section} />}
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={pageTitle} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content={site.meta[lang]?.twitterHandle ?? '@SergioAnastacio'} />
+    <meta name="twitter:creator" content={site.meta[lang]?.twitterHandle ?? '@SergioAnastacio'} />
+    <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
-    <title>{title}</title>
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify({
-        '@context': 'https://schema.org',
-        '@graph': [
-          {
-            '@type': 'Person',
-            name: site.name,
-            url: site.url,
-            image: site.avatarUrl,
-            jobTitle: 'Software Developer',
-            sameAs: [site.githubUrl],
-          },
-          {
-            '@type': 'WebSite',
-            name: site.name,
-            url: site.url,
-          },
-        ],
-      })}
-    />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={pageTitle} />
+
+    {datePublished && <meta property="article:published_time" content={datePublished} />}
+    {dateModified && <meta property="article:modified_time" content={dateModified} />}
+    {tags.map((tag) => <meta property="article:tag" content={tag} />)}
+
+    <title>{pageTitle}</title>
+
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
   <body>
-    <a class="skip-link" href="#main-content">Saltar al contenido</a>
+    <a class="skip-link" href="#main-content">{t('a11y.skipLink')}</a>
     <Navbar />
     <main id="main-content">
       <slot />
