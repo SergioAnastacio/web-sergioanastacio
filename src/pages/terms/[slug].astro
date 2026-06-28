@@ -1,0 +1,60 @@
+---
+import CTA from '../../components/CTA.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import type { AppInfo } from '../../data/apps';
+import { apps } from '../../data/apps';
+import { mailto, site } from '../../data/site';
+
+interface Props {
+  app: AppInfo;
+}
+
+export function getStaticPaths() {
+  return apps.map((app) => ({ params: { slug: app.slug }, props: { app } }));
+}
+
+const { app } = Astro.props;
+---
+
+<SiteLayout
+  title={`Terms of Use for ${app.name} — Sergio Anastacio`}
+  description={`Términos de uso para ${app.name}.`}
+  path={`/terms/${app.slug}`}
+>
+  <section class="page-hero">
+    <p class="eyebrow">Terms of Use</p>
+    <h1>Terms of Use for {app.name}</h1>
+    <p>Last updated: {app.terms.lastUpdated}</p>
+  </section>
+
+  <section class="section legal-copy">
+    <h2>Acceptance of terms</h2>
+    <p>{app.terms.summary}</p>
+
+    <h2>Use of the app</h2>
+    <ul>{app.terms.usage.map((item) => <li>{item}</li>)}</ul>
+
+    <h2>Accounts</h2>
+    <p>{app.terms.accounts}</p>
+
+    <h2>Subscriptions and payments</h2>
+    <p>{app.terms.subscriptions}</p>
+
+    <h2>Limitations</h2>
+    <p>{app.terms.limitations}</p>
+
+    <h2>Changes and contact</h2>
+    <p>
+      Estos términos pueden actualizarse conforme el producto avance. Para preguntas escribe a
+      {' '}<a href={mailto(site.emails.apps, `Términos ${app.name}`)}>{site.emails.apps}</a>.
+    </p>
+  </section>
+
+  <CTA
+    title="¿Necesitas soporte?"
+    primaryHref={`/support/${app.slug}`}
+    primaryLabel={`Support for ${app.name}`}
+    secondaryHref={`/privacy/${app.slug}`}
+    secondaryLabel="Privacy Policy"
+  />
+</SiteLayout>

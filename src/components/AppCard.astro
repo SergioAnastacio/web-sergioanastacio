@@ -1,0 +1,25 @@
+---
+import type { AppInfo } from '../data/apps';
+
+interface Props {
+  app: AppInfo;
+}
+
+const { app } = Astro.props;
+---
+
+<article class="resource-card">
+  <div class="card-header">
+    <p class="status-pill">{app.status}</p>
+    <h2>{app.name}</h2>
+  </div>
+  <p>{app.description}</p>
+  <div class="meta-row" aria-label={`Plataformas para ${app.name}`}>
+    {app.platforms.map((platform) => <span>{platform}</span>)}
+  </div>
+  <div class="card-links">
+    <a href={`/apps/${app.slug}`}>View App</a>
+    <a href={`/privacy/${app.slug}`}>Privacy</a>
+    <a href={`/support/${app.slug}`}>Support</a>
+  </div>
+</article>

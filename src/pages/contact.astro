@@ -1,0 +1,56 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { mailto, site } from '../data/site';
+
+const contactOptions = [
+  {
+    label: 'Business & professional',
+    email: site.emails.contact,
+    subject: 'Contacto desde sergioanastacio.com',
+    body: 'Clientes, entrevistas, colaboración profesional y oportunidades generales.',
+  },
+  {
+    label: 'App support',
+    email: site.emails.support,
+    subject: 'Soporte de apps',
+    body: 'Soporte, errores, dudas de uso y reportes relacionados con apps móviles.',
+  },
+  {
+    label: 'Apps & privacy',
+    email: site.emails.apps,
+    subject: 'Apps y privacidad',
+    body: 'Consultas sobre privacidad, publicación en tiendas y políticas de apps.',
+  },
+];
+---
+
+<SiteLayout
+  title="Contact — Sergio Anastacio"
+  description="Contacto de Sergio Anastacio para oportunidades profesionales, soporte de apps y consultas de privacidad."
+  path="/contact"
+>
+  <section class="page-hero">
+    <p class="eyebrow">Contact</p>
+    <h1>Contact Me</h1>
+    <p>Usa el correo adecuado según el tipo de solicitud. Por ahora el MVP usa enlaces directos de correo.</p>
+  </section>
+
+  <section class="section compact-section">
+    <div class="resource-grid">
+      {
+        contactOptions.map((option) => (
+          <article class="resource-card">
+            <div class="card-header">
+              <p class="status-pill">{option.label}</p>
+              <h2>{option.email}</h2>
+            </div>
+            <p>{option.body}</p>
+            <div class="card-links">
+              <a href={mailto(option.email, option.subject)}>Enviar correo</a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</SiteLayout>

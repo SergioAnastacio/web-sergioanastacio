@@ -1,0 +1,70 @@
+---
+import { mailto, site } from '../data/site';
+
+const groups = [
+  {
+    title: 'Products',
+    links: [
+      { label: 'Apps', href: '/apps' },
+      { label: 'Support', href: '/support' },
+      { label: 'Privacy', href: '/privacy' },
+    ],
+  },
+  {
+    title: 'Professional',
+    links: [
+      { label: 'Portfolio', href: '/portfolio' },
+      { label: 'Services', href: '/services' },
+      { label: 'Workana', href: '/workana' },
+      { label: 'About', href: '/about' },
+      { label: 'Contact', href: '/contact' },
+    ],
+  },
+  {
+    title: 'Legal',
+    links: [
+      { label: 'Terms', href: '/terms' },
+      { label: 'Legal', href: '/legal' },
+      { label: 'GitHub', href: site.githubUrl, external: true },
+    ],
+  },
+];
+---
+
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="footer-brand">
+      <a class="brand" href="/" aria-label="Inicio de Sergio Anastacio">SA</a>
+      <p>
+        Software developer building mobile apps, cloud systems, automation and AI-powered products.
+      </p>
+      <a href={mailto(site.emails.contact, 'Contacto desde sergioanastacio.com')}>
+        {site.emails.contact}
+      </a>
+    </div>
+
+    <nav class="footer-groups" aria-label="Navegación de pie de página">
+      {
+        groups.map((group) => (
+          <div class="footer-group">
+            <h2>{group.title}</h2>
+            {group.links.map((link) => (
+              <a
+                href={link.href}
+                rel={link.external ? 'me noopener' : undefined}
+                target={link.external ? '_blank' : undefined}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+        ))
+      }
+    </nav>
+  </div>
+
+  <div class="footer-bottom">
+    <span>&copy; {new Date().getFullYear()} Sergio Anastacio. All rights reserved.</span>
+    <span>Built with Astro and deployed through GitHub Pages.</span>
+  </div>
+</footer>

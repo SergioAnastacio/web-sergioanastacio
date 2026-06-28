@@ -5,10 +5,14 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro build",
     "preview": "astro preview"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
     "astro": "^7.0.3"
+  },
+  "devDependencies": {
+    "cross-env": "^10.1.0"
   }
 }

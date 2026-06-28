@@ -1,22 +1,16 @@
 ---
-import '../styles/global.css';
+import SiteLayout from '../layouts/SiteLayout.astro';
 ---
 
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="robots" content="noindex" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>Página no encontrada | Sergio Anastacio</title>
-  </head>
-  <body>
-    <main class="not-found">
-      <p class="eyebrow">404</p>
-      <h1>Página no encontrada</h1>
-      <p>La ruta que abriste no existe o fue movida.</p>
-      <a class="primary-link" href="/">Volver al inicio</a>
-    </main>
-  </body>
-</html>
+<SiteLayout
+  title="Página no encontrada | Sergio Anastacio"
+  description="La ruta solicitada no existe en sergioanastacio.com."
+  noindex
+>
+  <section class="not-found">
+    <p class="eyebrow">404</p>
+    <h1>Página no encontrada</h1>
+    <p>La ruta que abriste no existe o fue movida.</p>
+    <a class="primary-link" href="/">Volver al inicio</a>
+  </section>
+</SiteLayout>

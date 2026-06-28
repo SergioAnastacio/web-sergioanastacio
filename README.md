@@ -16,6 +16,36 @@ npm run build
 npm run preview
 ```
 
+## Estructura del sitio
+
+Rutas principales:
+
+```text
+/
+/apps
+/apps/{app-slug}
+/apps/{app-slug}/changelog
+/portfolio
+/portfolio/{case-study-slug}
+/services
+/workana
+/about
+/contact
+/support
+/support/{app-slug}
+/privacy
+/privacy/{app-slug}
+/terms
+/terms/{app-slug}
+/legal
+```
+
+Astro genera el sitemap con `@astrojs/sitemap` en:
+
+```text
+/sitemap-index.xml
+```
+
 ## Dominio
 
 El dominio configurado para GitHub Pages es:
