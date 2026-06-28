@@ -1,0 +1,28 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { apps } from '../../data/apps';
+import { mailto, site } from '../../data/site';
+---
+
+<SiteLayout
+  title="Support — Sergio Anastacio"
+  description="Centro de soporte para apps y productos de Sergio Anastacio."
+  path="/support"
+>
+  <section class="page-hero">
+    <p class="eyebrow">Support</p>
+    <h1>Soporte para apps y productos.</h1>
+    <p>Elige una app o escribe directamente al correo de soporte.</p>
+    <div class="hero-actions">
+      <a class="primary-link" href={mailto(site.emails.support, 'Soporte general')}>
+        {site.emails.support}
+      </a>
+    </div>
+  </section>
+
+  <section class="section compact-section">
+    <div class="link-grid">
+      {apps.map((app) => <a href={`/support/${app.slug}`}>Support for {app.name}</a>)}
+    </div>
+  </section>
+</SiteLayout>

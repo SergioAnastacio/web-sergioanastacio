@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sergioanastacio.com/sitemap-index.xml

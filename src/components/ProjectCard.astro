@@ -1,0 +1,23 @@
+---
+import type { ProjectInfo } from '../data/projects';
+
+interface Props {
+  project: ProjectInfo;
+}
+
+const { project } = Astro.props;
+---
+
+<article class="resource-card">
+  <div class="card-header">
+    <p class="status-pill">{project.type}</p>
+    <h2>{project.name}</h2>
+  </div>
+  <p>{project.summary}</p>
+  <div class="meta-row" aria-label={`Stack para ${project.name}`}>
+    {project.stack.slice(0, 4).map((item) => <span>{item}</span>)}
+  </div>
+  <div class="card-links">
+    <a href={`/portfolio/${project.slug}`}>View Case Study</a>
+  </div>
+</article>

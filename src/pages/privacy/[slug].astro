@@ -1,0 +1,60 @@
+---
+import CTA from '../../components/CTA.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import type { AppInfo } from '../../data/apps';
+import { apps } from '../../data/apps';
+import { mailto, site } from '../../data/site';
+
+interface Props {
+  app: AppInfo;
+}
+
+export function getStaticPaths() {
+  return apps.map((app) => ({ params: { slug: app.slug }, props: { app } }));
+}
+
+const { app } = Astro.props;
+---
+
+<SiteLayout
+  title={`Privacy Policy for ${app.name} — Sergio Anastacio`}
+  description={`Política de privacidad para ${app.name}.`}
+  path={`/privacy/${app.slug}`}
+>
+  <section class="page-hero">
+    <p class="eyebrow">Privacy Policy</p>
+    <h1>Privacy Policy for {app.name}</h1>
+    <p>Last updated: {app.privacy.lastUpdated}</p>
+  </section>
+
+  <section class="section legal-copy">
+    <h2>Introduction</h2>
+    <p>{app.privacy.introduction}</p>
+
+    <h2>Information collected</h2>
+    <ul>{app.privacy.collected.map((item) => <li>{item}</li>)}</ul>
+
+    <h2>How information is used</h2>
+    <ul>{app.privacy.usage.map((item) => <li>{item}</li>)}</ul>
+
+    <h2>Data storage</h2>
+    <p>{app.privacy.storage}</p>
+
+    <h2>Third-party services</h2>
+    <ul>{app.privacy.thirdPartyServices.map((item) => <li>{item}</li>)}</ul>
+
+    <h2>Children's privacy</h2>
+    <p>{app.privacy.children}</p>
+
+    <h2>User rights and contact</h2>
+    <p>{app.privacy.rights}</p>
+  </section>
+
+  <CTA
+    title="¿Tienes una pregunta de privacidad?"
+    primaryHref={mailto(site.emails.apps, `Privacidad ${app.name}`)}
+    primaryLabel={site.emails.apps}
+    secondaryHref={`/support/${app.slug}`}
+    secondaryLabel="Support"
+  />
+</SiteLayout>

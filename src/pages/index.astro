@@ -1,133 +1,131 @@
 ---
-import '../styles/global.css';
+import AppCard from '../components/AppCard.astro';
+import CTA from '../components/CTA.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { apps } from '../data/apps';
+import { projects } from '../data/projects';
+import { mailto, site } from '../data/site';
 
-const title = 'Sergio Anastacio | Software, automatización y web';
-const description =
-  'Sitio personal de Sergio Anastacio: software, automatización, plataformas web y despliegues confiables.';
-const githubUrl = 'https://github.com/SergioAnastacio';
-const avatarUrl = 'https://github.com/SergioAnastacio.png?size=320';
+const featuredApps = apps.slice(0, 3);
+const featuredProjects = projects.slice(0, 2);
 ---
 
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content={description} />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="theme-color" content="#f8f5ed" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="canonical" href="https://sergioanastacio.com/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content="https://sergioanastacio.com/" />
-    <meta property="og:image" content={avatarUrl} />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={avatarUrl} />
-    <title>{title}</title>
-  </head>
-  <body>
-    <header class="site-header" aria-label="Principal">
-      <a class="brand" href="/" aria-label="Inicio de Sergio Anastacio">SA</a>
-      <nav class="nav-links" aria-label="Navegación principal">
-        <a href="#enfoque">Enfoque</a>
-        <a href="#proyectos">Proyectos</a>
-        <a href="#contacto">Contacto</a>
-      </nav>
-    </header>
+<SiteLayout title={site.title} description={site.description} path="/">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-inner">
+      <img
+        class="profile-photo"
+        src={site.avatarUrl}
+        alt="Sergio Anastacio"
+        width="160"
+        height="160"
+        decoding="async"
+        fetchpriority="high"
+      />
+      <p class="eyebrow">Software Developer & Mobile Apps</p>
+      <h1 id="hero-title">Sergio Anastacio</h1>
+      <p class="hero-copy">
+        Desarrollo apps móviles, sistemas cloud, automatización e integraciones con IA para productos
+        simples de usar y sólidos de operar.
+      </p>
+      <div class="hero-actions" aria-label="Acciones principales">
+        <a class="primary-link" href="/apps">View Apps</a>
+        <a class="secondary-link" href="/contact">Contact Me</a>
+      </div>
+    </div>
+  </section>
 
-    <main>
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-inner">
-          <img
-            class="profile-photo"
-            src={avatarUrl}
-            alt="Sergio Anastacio"
-            width="160"
-            height="160"
-            decoding="async"
-            fetchpriority="high"
-          />
-          <p class="eyebrow">Software, automatización y web</p>
-          <h1 id="hero-title">Sergio Anastacio</h1>
-          <p class="hero-copy">
-            Construyo soluciones digitales claras: productos web, automatizaciones y despliegues pensados
-            para operar con confianza.
-          </p>
-          <div class="hero-actions" aria-label="Acciones principales">
-            <a class="primary-link" href={githubUrl} rel="me noopener" target="_blank">Ver GitHub</a>
-            <a class="secondary-link" href="#contacto">Contacto</a>
-          </div>
-        </div>
-      </section>
+  <section class="section" aria-labelledby="summary-title">
+    <div class="section-heading split-heading">
+      <div>
+        <p class="section-kicker">Personal Brand</p>
+        <h2 id="summary-title">Software claro para productos reales.</h2>
+      </div>
+      <p>
+        Este sitio funciona como hub público para apps móviles, soporte, privacidad, portfolio y servicios
+        profesionales. El MVP se mantiene estático para ser rápido, simple y fácil de publicar.
+      </p>
+    </div>
+    <div class="feature-grid">
+      <article class="feature-card">
+        <h3>Mobile Apps</h3>
+        <p>Presencia pública para apps en App Store y Google Play, con landing, soporte y privacidad.</p>
+      </article>
+      <article class="feature-card">
+        <h3>Cloud Systems</h3>
+        <p>APIs, automatización, despliegues y flujos operativos pensados para crecer sin fricción.</p>
+      </article>
+      <article class="feature-card">
+        <h3>AI Products</h3>
+        <p>Integraciones con IA para reducir tareas repetitivas y convertir contexto técnico en acciones.</p>
+      </article>
+    </div>
+  </section>
 
-      <section class="section" id="enfoque" aria-labelledby="focus-title">
-        <div class="section-heading">
-          <p class="section-kicker">Enfoque</p>
-          <h2 id="focus-title">Trabajo con sistemas útiles, rápidos y mantenibles.</h2>
-        </div>
-        <div class="feature-grid">
-          <article class="feature-card">
-            <h3>Productos web</h3>
-            <p>Interfaces enfocadas en claridad, rendimiento y flujos que la gente puede usar todos los días.</p>
-          </article>
-          <article class="feature-card">
-            <h3>Automatización</h3>
-            <p>Procesos repetibles para reducir fricción entre repositorios, validaciones y entregas.</p>
-          </article>
-          <article class="feature-card">
-            <h3>Despliegues</h3>
-            <p>Publicación continua con configuración visible, ramas limpias y evidencia de cada cambio.</p>
-          </article>
-        </div>
-      </section>
+  <section class="section section-tint" aria-labelledby="apps-title">
+    <div class="section-heading split-heading">
+      <div>
+        <p class="section-kicker">Apps</p>
+        <h2 id="apps-title">Apps móviles bajo la marca Sergio Anastacio.</h2>
+      </div>
+      <a class="secondary-link" href="/apps">Ver todas</a>
+    </div>
+    <div class="resource-grid">
+      {featuredApps.map((app) => <AppCard app={app} />)}
+    </div>
+  </section>
 
-      <section class="section work-section" id="proyectos" aria-labelledby="work-title">
-        <div class="section-heading">
-          <p class="section-kicker">Proyectos</p>
-          <h2 id="work-title">Áreas donde concentro mi trabajo.</h2>
-        </div>
-        <div class="work-list">
-          <article class="work-item">
-            <span class="work-index">01</span>
-            <div>
-              <h3>Aplicaciones internas</h3>
-              <p>Herramientas para equipos que necesitan operar, revisar información y tomar decisiones sin ruido.</p>
-            </div>
-          </article>
-          <article class="work-item">
-            <span class="work-index">02</span>
-            <div>
-              <h3>Integraciones</h3>
-              <p>Conexiones entre servicios, APIs y flujos de trabajo que mantienen el contexto técnico trazable.</p>
-            </div>
-          </article>
-          <article class="work-item">
-            <span class="work-index">03</span>
-            <div>
-              <h3>Sitios estáticos</h3>
-              <p>Experiencias ligeras, publicadas con GitHub Pages y preparadas para dominios propios.</p>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section class="contact-band" id="contacto" aria-labelledby="contact-title">
+  <section class="section" aria-labelledby="services-title">
+    <div class="section-heading">
+      <p class="section-kicker">Services</p>
+      <h2 id="services-title">Servicios para clientes, equipos y productos digitales.</h2>
+    </div>
+    <div class="work-list">
+      <article class="work-item">
+        <span class="work-index">01</span>
         <div>
-          <p class="section-kicker">Contacto</p>
-          <h2 id="contact-title">Puedes encontrarme en GitHub.</h2>
+          <h3>Mobile App Development</h3>
+          <p>Apps iOS y Android con arquitectura limpia, integración de APIs y publicación preparada.</p>
         </div>
-        <a class="primary-link dark" href={githubUrl} rel="me noopener" target="_blank">
-          github.com/SergioAnastacio
-        </a>
-      </section>
-    </main>
+      </article>
+      <article class="work-item">
+        <span class="work-index">02</span>
+        <div>
+          <h3>Backend APIs & DevOps</h3>
+          <p>Servicios .NET, bases de datos, CI/CD, Docker, GitHub Actions y automatización cloud.</p>
+        </div>
+      </article>
+      <article class="work-item">
+        <span class="work-index">03</span>
+        <div>
+          <h3>AI Integration</h3>
+          <p>Flujos con IA para soporte, análisis, automatización y productos con asistencia inteligente.</p>
+        </div>
+      </article>
+    </div>
+  </section>
 
-    <footer class="site-footer">
-      <span>&copy; {new Date().getFullYear()} Sergio Anastacio</span>
-      <span>Construido con Astro y publicado con GitHub Pages.</span>
-    </footer>
-  </body>
-</html>
+  <section class="section section-tint" aria-labelledby="portfolio-title">
+    <div class="section-heading split-heading">
+      <div>
+        <p class="section-kicker">Portfolio</p>
+        <h2 id="portfolio-title">Casos técnicos y capacidades de arquitectura.</h2>
+      </div>
+      <a class="secondary-link" href="/portfolio">Ver portfolio</a>
+    </div>
+    <div class="resource-grid two-columns">
+      {featuredProjects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </section>
+
+  <CTA
+    kicker="Contact"
+    title="Hablemos de apps, APIs, automatización o IA."
+    body="Para oportunidades profesionales, soporte de apps o colaboración técnica, usa el correo más adecuado."
+    primaryHref={mailto(site.emails.contact, 'Contacto desde sergioanastacio.com')}
+    primaryLabel={site.emails.contact}
+    secondaryHref="/contact"
+    secondaryLabel="Ver opciones"
+  />
+</SiteLayout>

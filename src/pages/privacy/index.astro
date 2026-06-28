@@ -1,0 +1,22 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { apps } from '../../data/apps';
+---
+
+<SiteLayout
+  title="Privacy Policies — Sergio Anastacio"
+  description="Políticas de privacidad para apps y productos de Sergio Anastacio."
+  path="/privacy"
+>
+  <section class="page-hero">
+    <p class="eyebrow">Privacy Policies</p>
+    <h1>Políticas de privacidad por producto.</h1>
+    <p>Selecciona una app para consultar sus prácticas de datos, soporte y contacto.</p>
+  </section>
+
+  <section class="section compact-section">
+    <div class="link-grid">
+      {apps.map((app) => <a href={`/privacy/${app.slug}`}>{app.name} Privacy Policy</a>)}
+    </div>
+  </section>
+</SiteLayout>

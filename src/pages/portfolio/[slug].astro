@@ -1,0 +1,81 @@
+---
+import CTA from '../../components/CTA.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import type { ProjectInfo } from '../../data/projects';
+import { projects } from '../../data/projects';
+import { mailto, site } from '../../data/site';
+
+interface Props {
+  project: ProjectInfo;
+}
+
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+const { project } = Astro.props;
+---
+
+<SiteLayout
+  title={`${project.name} — Case Study`}
+  description={project.summary}
+  path={`/portfolio/${project.slug}`}
+>
+  <section class="page-hero">
+    <p class="eyebrow">{project.type}</p>
+    <h1>{project.name}</h1>
+    <p>{project.summary}</p>
+    <div class="meta-row">
+      {project.stack.map((item) => <span>{item}</span>)}
+    </div>
+  </section>
+
+  <section class="section two-panel">
+    <div>
+      <p class="section-kicker">Problem</p>
+      <h2>{project.problem}</h2>
+    </div>
+    <div class="detail-panel">
+      <h3>Solution</h3>
+      <p>{project.solution}</p>
+      <h3>Outcome</h3>
+      <p>{project.result}</p>
+    </div>
+  </section>
+
+  <section class="section section-tint">
+    <div class="section-heading">
+      <p class="section-kicker">Architecture</p>
+      <h2>Decisiones y estructura técnica.</h2>
+    </div>
+    <div class="feature-grid">
+      {project.architecture.map((item) => <article class="feature-card"><p>{item}</p></article>)}
+    </div>
+  </section>
+
+  <section class="section two-panel">
+    <div>
+      <p class="section-kicker">Technical Decisions</p>
+      <h2>Tradeoffs principales.</h2>
+    </div>
+    <div class="detail-panel">
+      <ul>{project.decisions.map((decision) => <li>{decision}</li>)}</ul>
+    </div>
+  </section>
+
+  <section class="section section-tint">
+    <div class="section-heading">
+      <p class="section-kicker">Lessons Learned</p>
+      <h2>Aprendizajes reutilizables.</h2>
+    </div>
+    <ul class="clean-list">{project.lessons.map((lesson) => <li>{lesson}</li>)}</ul>
+  </section>
+
+  <CTA
+    title="¿Quieres conversar sobre una solución similar?"
+    primaryHref={mailto(site.emails.contact, `Case study: ${project.name}`)}
+    primaryLabel={site.emails.contact}
+    secondaryHref="/portfolio"
+    secondaryLabel="Back to portfolio"
+  />
+</SiteLayout>

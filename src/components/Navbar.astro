@@ -1,0 +1,10 @@
+---
+import { site } from '../data/site';
+---
+
+<header class="site-header" aria-label="Principal">
+  <a class="brand" href="/" aria-label="Inicio de Sergio Anastacio">SA</a>
+  <nav class="nav-links" aria-label="Navegación principal">
+    {site.nav.map((item) => <a href={item.href}>{item.label}</a>)}
+  </nav>
+</header>

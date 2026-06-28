@@ -1,0 +1,38 @@
+---
+import AppCard from '../../components/AppCard.astro';
+import CTA from '../../components/CTA.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { apps } from '../../data/apps';
+import { mailto, site } from '../../data/site';
+---
+
+<SiteLayout
+  title="Apps — Sergio Anastacio"
+  description="Apps móviles creadas bajo la marca Sergio Anastacio, con enlaces de privacidad, soporte y publicación."
+  path="/apps"
+>
+  <section class="page-hero">
+    <p class="eyebrow">Apps</p>
+    <h1>Mobile apps built for focused work.</h1>
+    <p>
+      Catálogo público de apps móviles, estados de publicación, plataformas disponibles y enlaces requeridos
+      por App Store y Google Play.
+    </p>
+  </section>
+
+  <section class="section compact-section" aria-label="Listado de apps">
+    <div class="resource-grid">
+      {apps.map((app) => <AppCard app={app} />)}
+    </div>
+  </section>
+
+  <CTA
+    kicker="Apps Support"
+    title="¿Tienes una pregunta sobre una app?"
+    body="Usa el correo de soporte para reportar bugs, dudas de privacidad o solicitudes relacionadas con productos móviles."
+    primaryHref={mailto(site.emails.support, 'Soporte de apps')}
+    primaryLabel={site.emails.support}
+    secondaryHref="/support"
+    secondaryLabel="Support hub"
+  />
+</SiteLayout>

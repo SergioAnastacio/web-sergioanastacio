@@ -1,0 +1,34 @@
+---
+import ProjectCard from '../../components/ProjectCard.astro';
+import CTA from '../../components/CTA.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { projects } from '../../data/projects';
+import { mailto, site } from '../../data/site';
+---
+
+<SiteLayout
+  title="Portfolio — Sergio Anastacio"
+  description="Portfolio técnico de Sergio Anastacio: apps móviles, APIs, cloud, DevOps, IA y arquitectura de software."
+  path="/portfolio"
+>
+  <section class="page-hero">
+    <p class="eyebrow">Portfolio</p>
+    <h1>Technical portfolio and case studies.</h1>
+    <p>Casos técnicos y capacidades para clientes, entrevistas y colaboración profesional.</p>
+  </section>
+
+  <section class="section compact-section">
+    <div class="resource-grid">
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </section>
+
+  <CTA
+    kicker="Collaboration"
+    title="¿Quieres revisar un caso técnico o construir algo similar?"
+    primaryHref={mailto(site.emails.contact, 'Portfolio y servicios')}
+    primaryLabel={site.emails.contact}
+    secondaryHref="/services"
+    secondaryLabel="Services"
+  />
+</SiteLayout>
