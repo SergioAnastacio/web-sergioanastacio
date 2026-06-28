@@ -8,6 +8,14 @@ export default defineConfig({
   site: 'https://sergioanastacio.com',
   integrations: [sitemap(), react()],
 
+  i18n: {
+    defaultLocale: 'es',
+    locales: ['es', 'en'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
+
   vite: {
     plugins: [tailwindcss()],
   },

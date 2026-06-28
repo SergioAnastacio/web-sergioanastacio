@@ -1,0 +1,41 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import type { AppInfo } from '../../data/apps';
+import { getLangFromUrl } from '../../i18n/utils';
+
+interface Props {
+  app: AppInfo;
+}
+
+const { app } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const en = lang === 'en';
+---
+
+<SiteLayout
+  title={`${app.name} Changelog — Sergio Anastacio Apps`}
+  description={en ? `Version history, changes and improvements for ${app.name}.` : `Historial de versiones, cambios y mejoras de ${app.name}.`}
+  path={Astro.url.pathname}
+>
+  <section class="page-hero">
+    <p class="eyebrow">Changelog</p>
+    <h1>{app.name} Changelog</h1>
+    <p>{en ? 'Public record of versions, changes, fixes and improvements.' : 'Historial público de versiones, cambios, correcciones y mejoras.'}</p>
+  </section>
+
+  <section class="section compact-section">
+    <div class="timeline-list">
+      {
+        app.changelog.map((release) => (
+          <article class="timeline-item">
+            <p class="status-pill">{release.released}</p>
+            <h2>{en ? 'Version' : 'Versión'} {release.version}</h2>
+            <ul>
+              {release.changes.map((change) => <li>{change}</li>)}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</SiteLayout>

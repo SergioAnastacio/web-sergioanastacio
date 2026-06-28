@@ -1,29 +1,34 @@
 ---
 import { mailto, site } from '../data/site';
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const lp = (path: string) => getLocalizedPath(path, lang);
 
 const groups = [
   {
-    title: 'Products',
+    title: t('footer.products'),
     links: [
-      { label: 'Apps', href: '/apps' },
-      { label: 'Support', href: '/support' },
-      { label: 'Privacy', href: '/privacy' },
+      { label: t('nav.apps'), href: lp('/apps') },
+      { label: 'Support', href: lp('/support') },
+      { label: 'Privacy', href: lp('/privacy') },
     ],
   },
   {
-    title: 'Professional',
+    title: t('footer.professional'),
     links: [
-      { label: 'Portfolio', href: '/portfolio' },
-      { label: 'Services', href: '/services' },
-      { label: 'About', href: '/about' },
-      { label: 'Contact', href: '/contact' },
+      { label: t('nav.portfolio'), href: lp('/portfolio') },
+      { label: t('nav.services'), href: lp('/services') },
+      { label: t('nav.about'), href: lp('/about') },
+      { label: t('nav.contact'), href: lp('/contact') },
     ],
   },
   {
-    title: 'Legal',
+    title: t('footer.legal'),
     links: [
-      { label: 'Terms', href: '/terms' },
-      { label: 'Legal', href: '/legal' },
+      { label: 'Terms', href: lp('/terms') },
+      { label: 'Legal', href: lp('/legal') },
       { label: 'GitHub', href: site.githubUrl, external: true },
     ],
   },
@@ -33,10 +38,8 @@ const groups = [
 <footer class="site-footer">
   <div class="footer-main">
     <div class="footer-brand">
-      <a class="brand" href="/" aria-label="Inicio de Sergio Anastacio">SA</a>
-      <p>
-        Software developer building mobile apps, cloud systems, automation and AI-powered products.
-      </p>
+      <a class="brand" href={lp('/')} aria-label="Sergio Anastacio">SA</a>
+      <p>{t('footer.tagline')}</p>
       <a href={mailto(site.emails.contact, 'Contacto desde sergioanastacio.com')}>
         {site.emails.contact}
       </a>
@@ -63,7 +66,7 @@ const groups = [
   </div>
 
   <div class="footer-bottom">
-    <span>&copy; {new Date().getFullYear()} Sergio Anastacio. All rights reserved.</span>
-    <span>Built with Astro and deployed through GitHub Pages.</span>
+    <span>&copy; {new Date().getFullYear()} Sergio Anastacio. {t('footer.rights')}</span>
+    <span>{t('footer.built')}</span>
   </div>
 </footer>

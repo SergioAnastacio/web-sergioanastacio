@@ -1,0 +1,80 @@
+---
+import CTA from '../CTA.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import type { ProjectInfo } from '../../data/projects';
+import { mailto, site } from '../../data/site';
+import { getLangFromUrl, getLocalizedPath } from '../../i18n/utils';
+
+interface Props {
+  project: ProjectInfo;
+}
+
+const { project } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const en = lang === 'en';
+const lp = (p: string) => getLocalizedPath(p, lang);
+---
+
+<SiteLayout
+  title={`${project.name} — Case Study`}
+  description={project.summary}
+  path={Astro.url.pathname}
+>
+  <section class="page-hero">
+    <p class="eyebrow">{project.type}</p>
+    <h1>{project.name}</h1>
+    <p>{project.summary}</p>
+    <div class="meta-row">
+      {project.stack.map((item) => <span>{item}</span>)}
+    </div>
+  </section>
+
+  <section class="section two-panel">
+    <div>
+      <p class="section-kicker">{en ? 'Problem' : 'Problema'}</p>
+      <h2>{project.problem}</h2>
+    </div>
+    <div class="detail-panel">
+      <h3>{en ? 'Solution' : 'Solución'}</h3>
+      <p>{project.solution}</p>
+      <h3>{en ? 'Outcome' : 'Resultado'}</h3>
+      <p>{project.result}</p>
+    </div>
+  </section>
+
+  <section class="section section-tint">
+    <div class="section-heading">
+      <p class="section-kicker">{en ? 'Architecture' : 'Arquitectura'}</p>
+      <h2>{en ? 'Technical decisions and structure.' : 'Decisiones y estructura técnica.'}</h2>
+    </div>
+    <div class="feature-grid">
+      {project.architecture.map((item) => <article class="feature-card"><p>{item}</p></article>)}
+    </div>
+  </section>
+
+  <section class="section two-panel">
+    <div>
+      <p class="section-kicker">{en ? 'Technical Decisions' : 'Decisiones Técnicas'}</p>
+      <h2>{en ? 'Key tradeoffs.' : 'Tradeoffs principales.'}</h2>
+    </div>
+    <div class="detail-panel">
+      <ul>{project.decisions.map((decision) => <li>{decision}</li>)}</ul>
+    </div>
+  </section>
+
+  <section class="section section-tint">
+    <div class="section-heading">
+      <p class="section-kicker">{en ? 'Lessons Learned' : 'Aprendizajes'}</p>
+      <h2>{en ? 'Reusable takeaways.' : 'Aprendizajes reutilizables.'}</h2>
+    </div>
+    <ul class="clean-list">{project.lessons.map((lesson) => <li>{lesson}</li>)}</ul>
+  </section>
+
+  <CTA
+    title={en ? 'Want to discuss a similar solution?' : '¿Quieres conversar sobre una solución similar?'}
+    primaryHref={mailto(site.emails.contact, `Case study: ${project.name}`)}
+    primaryLabel={site.emails.contact}
+    secondaryHref={lp('/portfolio')}
+    secondaryLabel={en ? 'Back to portfolio' : 'Volver al portfolio'}
+  />
+</SiteLayout>

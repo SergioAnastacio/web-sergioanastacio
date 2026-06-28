@@ -1,0 +1,60 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { mailto, site } from '../../data/site';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const contactOptions = [
+  {
+    label: t('contact.option1'),
+    email: site.emails.contact,
+    subject: lang === 'en' ? 'Contact from sergioanastacio.com' : 'Contacto desde sergioanastacio.com',
+    body: t('contact.option1.copy'),
+  },
+  {
+    label: t('contact.option2'),
+    email: site.emails.support,
+    subject: lang === 'en' ? 'App support' : 'Soporte de apps',
+    body: t('contact.option2.copy'),
+  },
+  {
+    label: t('contact.option3'),
+    email: site.emails.apps,
+    subject: lang === 'en' ? 'Apps & privacy' : 'Apps y privacidad',
+    body: t('contact.option3.copy'),
+  },
+];
+---
+
+<SiteLayout
+  title={lang === 'en' ? 'Contact — Sergio Anastacio' : 'Contacto — Sergio Anastacio'}
+  description={t('contact.hero.copy')}
+  path={Astro.url.pathname}
+>
+  <section class="page-hero">
+    <p class="eyebrow">{t('contact.hero.eyebrow')}</p>
+    <h1>{t('contact.hero.title')}</h1>
+    <p>{t('contact.hero.copy')}</p>
+  </section>
+
+  <section class="section compact-section">
+    <div class="resource-grid">
+      {
+        contactOptions.map((option) => (
+          <article class="resource-card">
+            <div class="card-header">
+              <p class="status-pill">{option.label}</p>
+              <h2>{option.email}</h2>
+            </div>
+            <p>{option.body}</p>
+            <div class="card-links">
+              <a href={mailto(option.email, option.subject)}>{t('contact.send')}</a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</SiteLayout>

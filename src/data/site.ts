@@ -15,6 +15,7 @@ export const site = {
     { label: 'Apps', href: '/apps' },
     { label: 'Portfolio', href: '/portfolio' },
     { label: 'Services', href: '/services' },
+    { label: 'About', href: '/about' },
     { label: 'Contact', href: '/contact' },
   ],
 };

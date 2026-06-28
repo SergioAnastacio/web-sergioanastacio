@@ -1,23 +1,5 @@
 ---
-import SiteLayout from '../../layouts/SiteLayout.astro';
-import { apps } from '../../data/apps';
+import TermsIndexContent from '../../components/pages/TermsIndexContent.astro';
 ---
 
-<SiteLayout
-  title="Terms — Sergio Anastacio"
-  description="Términos generales y términos de uso por app."
-  path="/terms"
->
-  <section class="page-hero">
-    <p class="eyebrow">Terms</p>
-    <h1>Términos de uso.</h1>
-    <p>Consulta términos generales y términos específicos por app.</p>
-  </section>
-
-  <section class="section compact-section">
-    <div class="link-grid">
-      <a href="/legal">General Legal Information</a>
-      {apps.map((app) => <a href={`/terms/${app.slug}`}>{app.name} Terms of Use</a>)}
-    </div>
-  </section>
-</SiteLayout>
+<TermsIndexContent />

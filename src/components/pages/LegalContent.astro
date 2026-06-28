@@ -1,0 +1,44 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { apps } from '../../data/apps';
+import { mailto, site } from '../../data/site';
+import { getLangFromUrl, getLocalizedPath } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const en = lang === 'en';
+const lp = (p: string) => getLocalizedPath(p, lang);
+---
+
+<SiteLayout
+  title="Legal — Sergio Anastacio"
+  description={en ? 'Legal hub with privacy, terms, support and contact.' : 'Centro legal con privacidad, términos, soporte y contacto.'}
+  path={Astro.url.pathname}
+>
+  <section class="page-hero">
+    <p class="eyebrow">{en ? 'Legal' : 'Legal'}</p>
+    <h1>{en ? 'Legal and compliance hub.' : 'Centro legal y cumplimiento.'}</h1>
+    <p>{en ? 'Central links for privacy policies, terms, support and contact.' : 'Enlaces centrales para políticas de privacidad, términos, soporte y contacto.'}</p>
+  </section>
+
+  <section class="section compact-section">
+    <div class="link-grid">
+      <a href={lp('/privacy')}>{en ? 'Privacy Policies' : 'Políticas de Privacidad'}</a>
+      <a href={lp('/terms')}>{en ? 'Terms of Use' : 'Términos de Uso'}</a>
+      <a href={lp('/support')}>{en ? 'Support' : 'Soporte'}</a>
+      <a href={lp('/contact')}>{en ? 'Contact' : 'Contacto'}</a>
+      {apps.map((app) => <a href={lp(`/apps/${app.slug}`)}>{app.name} {en ? 'App Website' : 'Sitio de la App'}</a>)}
+    </div>
+  </section>
+
+  <section class="section section-tint">
+    <div class="section-heading">
+      <p class="section-kicker">{en ? 'Contact' : 'Contacto'}</p>
+      <h2>{en ? 'Official emails.' : 'Correos oficiales.'}</h2>
+    </div>
+    <div class="contact-list">
+      <a href={mailto(site.emails.contact, en ? 'Legal contact' : 'Contacto legal')}>{site.emails.contact}</a>
+      <a href={mailto(site.emails.support, en ? 'Legal support' : 'Soporte legal')}>{site.emails.support}</a>
+      <a href={mailto(site.emails.apps, en ? 'Apps & privacy' : 'Apps y privacidad')}>{site.emails.apps}</a>
+    </div>
+  </section>
+</SiteLayout>

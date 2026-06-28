@@ -1,0 +1,12 @@
+---
+import TermsDetailContent from '../../../components/pages/TermsDetailContent.astro';
+import { apps } from '../../../data/apps';
+
+export function getStaticPaths() {
+  return apps.map((app) => ({ params: { slug: app.slug }, props: { app } }));
+}
+
+const { app } = Astro.props;
+---
+
+<TermsDetailContent app={app} />

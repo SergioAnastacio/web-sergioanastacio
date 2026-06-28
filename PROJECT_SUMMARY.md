@@ -23,8 +23,11 @@ The MVP intentionally avoids backend functionality. Contact uses `mailto:` links
 - React support: enabled through `@astrojs/react`.
 - Tailwind support: enabled through `@tailwindcss/vite`.
 - Component library: no external component library is currently used.
+- i18n: ES (default, at root) + EN (under `/en/`), configured via Astro i18n with `prefixDefaultLocale: false`.
+- Dark mode: dark by default with a light toggle, applied before paint via an inline script.
+- Typography: Fraunces (display serif), Inter (body), IBM Plex Mono (labels/status) via `@fontsource-variable`.
 
-React is currently used only as an isolated Astro island in the home hero. The site remains Astro-first and static-first.
+React is used for the home hero `HeroSignal` island. The theme toggle and mobile nav use lightweight vanilla inline scripts to stay static-first.
 
 ## Tech Stack
 
@@ -34,6 +37,9 @@ Runtime and build:
 - React `19.x`
 - Tailwind CSS `4.x`
 - `@astrojs/sitemap`
+- `@fontsource-variable/fraunces` (display)
+- `@fontsource-variable/inter` (body)
+- `@fontsource/ibm-plex-mono` (mono labels)
 - GitHub Actions
 - GitHub Pages
 
@@ -54,7 +60,7 @@ cross-env ASTRO_TELEMETRY_DISABLED=1 astro build
 
 ## Site Map
 
-Active routes:
+Active routes (Spanish, default at root):
 
 ```text
 /
@@ -73,6 +79,27 @@ Active routes:
 /terms
 /terms/{app-slug}
 /legal
+```
+
+English mirrors the same structure under `/en/...`:
+
+```text
+/en/
+/en/apps
+/en/apps/{app-slug}
+/en/apps/{app-slug}/changelog
+/en/portfolio
+/en/portfolio/{case-study-slug}
+/en/services
+/en/about
+/en/contact
+/en/support
+/en/support/{app-slug}
+/en/privacy
+/en/privacy/{app-slug}
+/en/terms
+/en/terms/{app-slug}
+/en/legal
 ```
 
 Not active in the current MVP:
@@ -103,10 +130,10 @@ The app system is data-driven from `src/data/apps.ts`.
 Current placeholder app:
 
 - `TaskForge`
-- Status: `Coming Soon`
+- Status: `Coming Soon` (marked `concept: true` — displayed as "Concepto · No publicado")
 - Platforms: iOS and Android
 
-Generated app URLs:
+Generated app URLs (per locale):
 
 ```text
 /apps/taskforge
@@ -156,14 +183,37 @@ src/
 │   ├── AppCard.astro
 │   ├── CTA.astro
 │   ├── Footer.astro
+│   ├── LanguageSwitcher.astro
 │   ├── Navbar.astro
 │   ├── ProjectCard.astro
+│   ├── SectionReveal.astro
+│   ├── ThemeToggle.astro
+│   ├── pages/                  # locale-aware content components
+│   │   ├── AboutContent.astro
+│   │   ├── AppDetailContent.astro
+│   │   ├── AppsContent.astro
+│   │   ├── ChangelogContent.astro
+│   │   ├── ContactContent.astro
+│   │   ├── HomeContent.astro
+│   │   ├── LegalContent.astro
+│   │   ├── PortfolioContent.astro
+│   │   ├── PortfolioDetailContent.astro
+│   │   ├── PrivacyDetailContent.astro
+│   │   ├── PrivacyIndexContent.astro
+│   │   ├── ServicesContent.astro
+│   │   ├── SupportDetailContent.astro
+│   │   ├── SupportIndexContent.astro
+│   │   ├── TermsDetailContent.astro
+│   │   └── TermsIndexContent.astro
 │   └── react/
 │       └── HeroSignal.tsx
 ├── data/
 │   ├── apps.ts
 │   ├── projects.ts
 │   └── site.ts
+├── i18n/
+│   ├── ui.ts                   # translation dictionary (ES + EN)
+│   └── utils.ts                # getLangFromUrl, useTranslations, getLocalizedPath
 ├── layouts/
 │   └── SiteLayout.astro
 ├── pages/
@@ -177,7 +227,18 @@ src/
 │   ├── portfolio/
 │   ├── privacy/
 │   ├── support/
-│   └── terms/
+│   ├── terms/
+│   └── en/                     # English locale mirrors
+│       ├── index.astro
+│       ├── about.astro
+│       ├── contact.astro
+│       ├── legal.astro
+│       ├── services.astro
+│       ├── apps/
+│       ├── portfolio/
+│       ├── privacy/
+│       ├── support/
+│       └── terms/
 └── styles/
     └── global.css
 ```
@@ -279,12 +340,15 @@ public/robots.txt
 
 ## Design Direction
 
-Current visual direction:
+Current visual direction (Moodboard B — Editorial Developer):
 
-- Quiet professional interface.
-- Static-first pages with limited client JavaScript.
-- React used only for selective interactive/animated visual islands.
-- Tailwind available, but existing layout still uses project CSS in `global.css`.
+- Warm dark default (`#171513`) with a light toggle (`#fafaf9`).
+- Fraunces italic serif for display headings; Inter for body; IBM Plex Mono for labels, status pills and tags.
+- Single amber accent (`#fbbf24` dark / `#b45309` light) used sparingly for links, dots and key numbers.
+- Editorial layout: generous whitespace, subtle dot-grid hero backdrop, inverted ink CTA bands.
+- Status pills use semantic dots (green/amber/red). Concept apps show a distinct red badge.
+- Static-first pages with limited client JavaScript (vanilla toggle/menu scripts, one React island).
+- Scroll reveal animations via IntersectionObserver, respecting `prefers-reduced-motion`.
 
 ReactBits-style components are possible later, but should be added selectively to avoid making the whole site JS-heavy.
 
@@ -317,9 +381,10 @@ Desktop and mobile screenshots were reviewed locally with Playwright using Micro
 
 Recommended next decisions:
 
-1. Improve final copy for the home page and services page.
-2. Decide whether TaskForge is the real first app or just a placeholder.
-3. Replace placeholder portfolio content with real public-safe case studies.
-4. Decide whether to add ReactBits-inspired visual components to specific sections.
-5. Configure email routing in Cloudflare or a mail provider.
-6. Merge `dev` into `main` when ready to publish the expanded site.
+1. Replace placeholder portfolio content with real public-safe case studies.
+2. Migrate portfolio to Astro Content Collections to enable a blog/insights section.
+3. Connect a CMS (Decap CMS recommended — Git-based, free) when there is editorial volume.
+4. Add `hreflang` alternate link tags between ES and EN routes for SEO.
+5. Translate app/project data content fully (currently UI chrome is bilingual; data is ES-first).
+6. Configure email routing in Cloudflare or a mail provider.
+7. Merge `dev` into `main` when ready to publish the expanded site.

@@ -1,0 +1,25 @@
+---
+// Drop once per page to enable scroll reveal for any element
+// with `class="reveal"` and `data-reveal`.
+---
+
+<script>
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const items = document.querySelectorAll('[data-reveal]');
+  if (reduced) {
+    items.forEach((el) => el.classList.add('is-visible'));
+  } else if (items.length) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            (entry.target as HTMLElement).classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    );
+    items.forEach((el) => observer.observe(el));
+  }
+</script>

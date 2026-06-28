@@ -1,0 +1,33 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { apps } from '../../data/apps';
+import { mailto, site } from '../../data/site';
+import { getLangFromUrl, getLocalizedPath } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const en = lang === 'en';
+const lp = (p: string) => getLocalizedPath(p, lang);
+---
+
+<SiteLayout
+  title="Support — Sergio Anastacio"
+  description={en ? 'Support hub for apps and products by Sergio Anastacio.' : 'Centro de soporte para apps y productos de Sergio Anastacio.'}
+  path={Astro.url.pathname}
+>
+  <section class="page-hero">
+    <p class="eyebrow">{en ? 'Support' : 'Soporte'}</p>
+    <h1>{en ? 'Support for apps and products.' : 'Soporte para apps y productos.'}</h1>
+    <p>{en ? 'Choose an app or write directly to the support email.' : 'Elige una app o escribe directamente al correo de soporte.'}</p>
+    <div class="hero-actions">
+      <a class="primary-link" href={mailto(site.emails.support, en ? 'General support' : 'Soporte general')}>
+        {site.emails.support}
+      </a>
+    </div>
+  </section>
+
+  <section class="section compact-section">
+    <div class="link-grid">
+      {apps.map((app) => <a href={lp(`/support/${app.slug}`)}>{en ? 'Support for' : 'Soporte de'} {app.name}</a>)}
+    </div>
+  </section>
+</SiteLayout>

@@ -1,0 +1,65 @@
+---
+import CTA from '../CTA.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import type { AppInfo } from '../../data/apps';
+import { mailto, site } from '../../data/site';
+import { getLangFromUrl, getLocalizedPath } from '../../i18n/utils';
+
+interface Props {
+  app: AppInfo;
+}
+
+const { app } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const en = lang === 'en';
+const lp = (p: string) => getLocalizedPath(p, lang);
+---
+
+<SiteLayout
+  title={`Support for ${app.name} — Sergio Anastacio`}
+  description={en ? `Support, FAQ and known issues for ${app.name}.` : `Soporte, preguntas frecuentes e incidencias conocidas de ${app.name}.`}
+  path={Astro.url.pathname}
+>
+  <section class="page-hero">
+    <p class="eyebrow">{en ? 'App Support' : 'Soporte de App'}</p>
+    <h1>{en ? 'Support for' : 'Soporte para'} {app.name}</h1>
+    <p>{en ? 'Support info, FAQ and app legal links.' : 'Información de soporte, preguntas frecuentes y enlaces legales de la app.'}</p>
+  </section>
+
+  <section class="section two-panel">
+    <div>
+      <p class="section-kicker">FAQ</p>
+      <h2>{en ? 'Common questions.' : 'Preguntas comunes.'}</h2>
+    </div>
+    <div class="faq-list">
+      {app.faq.map((item) => <article><h3>{item.question}</h3><p>{item.answer}</p></article>)}
+    </div>
+  </section>
+
+  <section class="section section-tint">
+    <div class="section-heading">
+      <p class="section-kicker">{en ? 'Known Issues' : 'Incidencias'}</p>
+      <h2>{en ? 'Known issues.' : 'Incidencias conocidas.'}</h2>
+    </div>
+    <ul class="clean-list">{app.knownIssues.map((issue) => <li>{issue}</li>)}</ul>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <p class="section-kicker">{en ? 'Links' : 'Enlaces'}</p>
+      <h2>{en ? 'Privacy and terms.' : 'Privacidad y términos.'}</h2>
+    </div>
+    <div class="link-grid">
+      <a href={lp(`/privacy/${app.slug}`)}>{en ? 'Privacy Policy' : 'Política de Privacidad'}</a>
+      <a href={lp(`/terms/${app.slug}`)}>{en ? 'Terms of Use' : 'Términos de Uso'}</a>
+      <a href={lp(`/apps/${app.slug}`)}>{en ? 'App Website' : 'Sitio de la App'}</a>
+    </div>
+  </section>
+
+  <CTA
+    title={en ? `Contact ${app.name} support` : `Contactar soporte de ${app.name}`}
+    body={en ? 'Include the platform, app version if known, steps to reproduce and screenshots if applicable.' : 'Incluye plataforma, versión de la app si la conoces, pasos para reproducir el problema y capturas si aplica.'}
+    primaryHref={mailto(site.emails.support, `Soporte ${app.name}`)}
+    primaryLabel={site.emails.support}
+  />
+</SiteLayout>

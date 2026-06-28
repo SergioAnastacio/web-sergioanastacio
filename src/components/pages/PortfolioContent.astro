@@ -1,0 +1,41 @@
+---
+import ProjectCard from '../ProjectCard.astro';
+import CTA from '../CTA.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { projects } from '../../data/projects';
+import { mailto, site } from '../../data/site';
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const lp = (p: string) => getLocalizedPath(p, lang);
+---
+
+<SiteLayout
+  title="Portfolio — Sergio Anastacio"
+  description={lang === 'en'
+    ? 'Technical portfolio of Sergio Anastacio: mobile apps, APIs, cloud, DevOps, AI and software architecture.'
+    : 'Portfolio técnico de Sergio Anastacio: apps móviles, APIs, cloud, DevOps, IA y arquitectura de software.'}
+  path={Astro.url.pathname}
+>
+  <section class="page-hero">
+    <p class="eyebrow">{t('portfolio.hero.eyebrow')}</p>
+    <h1>{t('portfolio.hero.title')}</h1>
+    <p>{t('portfolio.hero.copy')}</p>
+  </section>
+
+  <section class="section compact-section">
+    <div class="resource-grid">
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </section>
+
+  <CTA
+    kicker={t('portfolio.cta.kicker')}
+    title={t('portfolio.cta.title')}
+    primaryHref={mailto(site.emails.contact, lang === 'en' ? 'Portfolio & services' : 'Portfolio y servicios')}
+    primaryLabel={site.emails.contact}
+    secondaryHref={lp('/services')}
+    secondaryLabel={t('portfolio.cta.secondary')}
+  />
+</SiteLayout>

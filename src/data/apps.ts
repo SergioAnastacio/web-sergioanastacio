@@ -20,6 +20,7 @@ export interface AppInfo {
   tagline: string;
   description: string;
   status: AppStatus;
+  concept?: boolean;
   platforms: Platform[];
   appStoreUrl?: string;
   googlePlayUrl?: string;
@@ -55,6 +56,7 @@ export const apps: AppInfo[] = [
     description:
       'TaskForge es una app en preparación para organizar tareas, mantener enfoque diario y convertir ideas en progreso visible sin una interfaz pesada.',
     status: 'Coming Soon',
+    concept: true,
     platforms: ['iOS', 'Android'],
     features: [
       'Planeación diaria con una lista clara de prioridades.',

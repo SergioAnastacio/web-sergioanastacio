@@ -1,0 +1,40 @@
+---
+import AppCard from '../AppCard.astro';
+import CTA from '../CTA.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { apps } from '../../data/apps';
+import { mailto, site } from '../../data/site';
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const lp = (p: string) => getLocalizedPath(p, lang);
+const title = lang === 'en' ? 'Apps — Sergio Anastacio' : 'Apps — Sergio Anastacio';
+const desc = lang === 'en'
+  ? 'Mobile apps by Sergio Anastacio, with privacy, support and publishing links.'
+  : 'Apps móviles creadas bajo la marca Sergio Anastacio, con enlaces de privacidad, soporte y publicación.';
+---
+
+<SiteLayout title={title} description={desc} path={Astro.url.pathname}>
+  <section class="page-hero">
+    <p class="eyebrow">{t('apps.hero.eyebrow')}</p>
+    <h1>{t('apps.hero.title')}</h1>
+    <p>{t('apps.hero.copy')}</p>
+  </section>
+
+  <section class="section compact-section" aria-label={t('nav.apps')}>
+    <div class="resource-grid">
+      {apps.map((app) => <AppCard app={app} />)}
+    </div>
+  </section>
+
+  <CTA
+    kicker={t('apps.cta.kicker')}
+    title={t('apps.cta.title')}
+    body={t('apps.cta.body')}
+    primaryHref={mailto(site.emails.support, lang === 'en' ? 'App support' : 'Soporte de apps')}
+    primaryLabel={site.emails.support}
+    secondaryHref={lp('/support')}
+    secondaryLabel={t('apps.cta.secondary')}
+  />
+</SiteLayout>
