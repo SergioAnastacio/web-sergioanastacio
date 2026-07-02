@@ -22,7 +22,7 @@ export default defineConfig({
         const pathname = url.pathname.replace(/\/$/, '') || '/';
 
         const highPriority = ['/', '/en'];
-        const mediumPriority = ['/apps', '/en/apps', '/services', '/en/services', '/portfolio', '/en/portfolio', '/about', '/en/about'];
+        const mediumPriority = ['/productos', '/en/products', '/services', '/en/services', '/portfolio', '/en/portfolio', '/about', '/en/about'];
         const lowPriority = ['/contact', '/en/contact', '/legal', '/en/legal'];
 
         if (highPriority.includes(pathname)) {

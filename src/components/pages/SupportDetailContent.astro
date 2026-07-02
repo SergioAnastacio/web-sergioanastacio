@@ -1,29 +1,31 @@
 ---
 import CTA from '../CTA.astro';
 import SiteLayout from '../../layouts/SiteLayout.astro';
-import type { AppInfo } from '../../data/apps';
+import type { ProductInfo } from '../../data/products';
+import { getProductKnownIssues } from '../../data/products';
 import { mailto, site } from '../../data/site';
-import { getLangFromUrl, getLocalizedPath } from '../../i18n/utils';
+import { getLangFromUrl, getLocalizedPath, getProductPath } from '../../i18n/utils';
 
 interface Props {
-  app: AppInfo;
+  product: ProductInfo;
 }
 
-const { app } = Astro.props;
+const { product } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const en = lang === 'en';
 const lp = (p: string) => getLocalizedPath(p, lang);
+const knownIssues = getProductKnownIssues(product, en);
 ---
 
 <SiteLayout
-  title={`Support for ${app.name} — Sergio Anastacio`}
-  description={en ? `Support, FAQ and known issues for ${app.name}.` : `Soporte, preguntas frecuentes e incidencias conocidas de ${app.name}.`}
+  title={`Support for ${product.name} — Sergio Anastacio`}
+  description={en ? `Support, FAQ and known issues for ${product.name}.` : `Soporte, preguntas frecuentes e incidencias conocidas de ${product.name}.`}
   path={Astro.url.pathname}
 >
   <section class="page-hero">
-    <p class="eyebrow">{en ? 'App Support' : 'Soporte de App'}</p>
-    <h1>{en ? 'Support for' : 'Soporte para'} {app.name}</h1>
-    <p>{en ? 'Support info, FAQ and app legal links.' : 'Información de soporte, preguntas frecuentes y enlaces legales de la app.'}</p>
+    <p class="eyebrow">{en ? 'Product Support' : 'Soporte de producto'}</p>
+    <h1>{en ? 'Support for' : 'Soporte para'} {product.name}</h1>
+    <p>{en ? 'Support info, FAQ and product legal links.' : 'Información de soporte, preguntas frecuentes y enlaces legales del producto.'}</p>
   </section>
 
   <section class="section two-panel">
@@ -32,7 +34,7 @@ const lp = (p: string) => getLocalizedPath(p, lang);
       <h2>{en ? 'Common questions.' : 'Preguntas comunes.'}</h2>
     </div>
     <div class="faq-list">
-      {app.faq.map((item) => (
+      {product.faq.map((item) => (
         <article>
           <h3>{en && item.questionEn ? item.questionEn : item.question}</h3>
           <p>{en && item.answerEn ? item.answerEn : item.answer}</p>
@@ -46,7 +48,7 @@ const lp = (p: string) => getLocalizedPath(p, lang);
       <p class="section-kicker">{en ? 'Known Issues' : 'Incidencias'}</p>
       <h2>{en ? 'Known issues.' : 'Incidencias conocidas.'}</h2>
     </div>
-    <ul class="clean-list">{app.knownIssues.map((issue) => <li>{issue}</li>)}</ul>
+    <ul class="clean-list">{knownIssues.map((issue) => <li>{issue}</li>)}</ul>
   </section>
 
   <section class="section">
@@ -55,16 +57,16 @@ const lp = (p: string) => getLocalizedPath(p, lang);
       <h2>{en ? 'Privacy and terms.' : 'Privacidad y términos.'}</h2>
     </div>
     <div class="link-grid">
-      <a href={lp(`/privacy/${app.slug}`)}>{en ? 'Privacy Policy' : 'Política de Privacidad'}</a>
-      <a href={lp(`/terms/${app.slug}`)}>{en ? 'Terms of Use' : 'Términos de Uso'}</a>
-      <a href={lp(`/apps/${app.slug}`)}>{en ? 'App Website' : 'Sitio de la App'}</a>
+      <a href={lp(`/privacy/${product.slug}`)}>{en ? 'Privacy Policy' : 'Política de Privacidad'}</a>
+      <a href={lp(`/terms/${product.slug}`)}>{en ? 'Terms of Use' : 'Términos de Uso'}</a>
+      <a href={getProductPath(product.slug, lang)}>{en ? 'Product Website' : 'Sitio del producto'}</a>
     </div>
   </section>
 
   <CTA
-    title={en ? `Contact ${app.name} support` : `Contactar soporte de ${app.name}`}
-    body={en ? 'Include the platform, app version if known, steps to reproduce and screenshots if applicable.' : 'Incluye plataforma, versión de la app si la conoces, pasos para reproducir el problema y capturas si aplica.'}
-    primaryHref={mailto(site.emails.support, `Soporte ${app.name}`)}
+    title={en ? `Contact ${product.name} support` : `Contactar soporte de ${product.name}`}
+    body={en ? 'Include the platform, product version if known, steps to reproduce and screenshots if applicable.' : 'Incluye plataforma, versión del producto si la conoces, pasos para reproducir el problema y capturas si aplica.'}
+    primaryHref={mailto(site.emails.support, `Soporte ${product.name}`)}
     primaryLabel={site.emails.support}
   />
 </SiteLayout>

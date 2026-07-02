@@ -1,53 +1,61 @@
 ---
 import CTA from '../CTA.astro';
 import SiteLayout from '../../layouts/SiteLayout.astro';
-import type { AppInfo } from '../../data/apps';
+import type { ProductInfo } from '../../data/products';
 import { mailto, site } from '../../data/site';
 import { getLangFromUrl, getLocalizedPath, formatDate } from '../../i18n/utils';
 
 interface Props {
-  app: AppInfo;
+  product: ProductInfo;
 }
 
-const { app } = Astro.props;
+const { product } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const en = lang === 'en';
 const lp = (p: string) => getLocalizedPath(p, lang);
+const privacy = product.privacy;
+const introduction = en && privacy.introductionEn ? privacy.introductionEn : privacy.introduction;
+const collected = en && privacy.collectedEn ? privacy.collectedEn : privacy.collected;
+const usage = en && privacy.usageEn ? privacy.usageEn : privacy.usage;
+const storage = en && privacy.storageEn ? privacy.storageEn : privacy.storage;
+const thirdPartyServices = en && privacy.thirdPartyServicesEn ? privacy.thirdPartyServicesEn : privacy.thirdPartyServices;
+const children = en && privacy.childrenEn ? privacy.childrenEn : privacy.children;
+const rights = en && privacy.rightsEn ? privacy.rightsEn : privacy.rights;
 ---
 
 <SiteLayout
-  title={`Privacy Policy for ${app.name} — Sergio Anastacio`}
-  description={en ? `Privacy policy for ${app.name}.` : `Política de privacidad para ${app.name}.`}
+  title={`Privacy Policy for ${product.name} — Sergio Anastacio`}
+  description={en ? `Privacy policy for ${product.name}.` : `Política de privacidad para ${product.name}.`}
   path={Astro.url.pathname}
 >
   <section class="page-hero">
     <p class="eyebrow">{en ? 'Privacy Policy' : 'Política de Privacidad'}</p>
-    <h1>{en ? 'Privacy Policy for' : 'Política de Privacidad de'} {app.name}</h1>
-    <p>{en ? 'Last updated:' : 'Última actualización:'} {formatDate(app.privacy.lastUpdated, lang)}</p>
+    <h1>{en ? 'Privacy Policy for' : 'Política de Privacidad de'} {product.name}</h1>
+    <p>{en ? 'Last updated:' : 'Última actualización:'} {formatDate(privacy.lastUpdated, lang)}</p>
   </section>
 
   <section class="section legal-copy">
     <h2>{en ? 'Introduction' : 'Introducción'}</h2>
-    <p>{app.privacy.introduction}</p>
+    <p>{introduction}</p>
     <h2>{en ? 'Information collected' : 'Información recopilada'}</h2>
-    <ul>{app.privacy.collected.map((item) => <li>{item}</li>)}</ul>
+    <ul>{collected.map((item) => <li>{item}</li>)}</ul>
     <h2>{en ? 'How information is used' : 'Uso de la información'}</h2>
-    <ul>{app.privacy.usage.map((item) => <li>{item}</li>)}</ul>
+    <ul>{usage.map((item) => <li>{item}</li>)}</ul>
     <h2>{en ? 'Data storage' : 'Almacenamiento de datos'}</h2>
-    <p>{app.privacy.storage}</p>
+    <p>{storage}</p>
     <h2>{en ? 'Third-party services' : 'Servicios de terceros'}</h2>
-    <ul>{app.privacy.thirdPartyServices.map((item) => <li>{item}</li>)}</ul>
+    <ul>{thirdPartyServices.map((item) => <li>{item}</li>)}</ul>
     <h2>{en ? "Children's privacy" : 'Privacidad infantil'}</h2>
-    <p>{app.privacy.children}</p>
+    <p>{children}</p>
     <h2>{en ? 'User rights and contact' : 'Derechos del usuario y contacto'}</h2>
-    <p>{app.privacy.rights}</p>
+    <p>{rights}</p>
   </section>
 
   <CTA
     title={en ? 'Have a privacy question?' : '¿Tienes una pregunta de privacidad?'}
-    primaryHref={mailto(site.emails.apps, `Privacidad ${app.name}`)}
+    primaryHref={mailto(site.emails.apps, `Privacidad ${product.name}`)}
     primaryLabel={site.emails.apps}
-    secondaryHref={lp(`/support/${app.slug}`)}
+    secondaryHref={lp(`/support/${product.slug}`)}
     secondaryLabel={en ? 'Support' : 'Soporte'}
   />
 </SiteLayout>

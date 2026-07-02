@@ -1,12 +1,12 @@
 ---
 import SupportDetailContent from '../../components/pages/SupportDetailContent.astro';
-import { apps } from '../../data/apps';
+import { products } from '../../data/products';
 
 export function getStaticPaths() {
-  return apps.map((app) => ({ params: { slug: app.slug }, props: { app } }));
+  return products.map((product) => ({ params: { slug: product.slug }, props: { product } }));
 }
 
-const { app } = Astro.props;
+const { product } = Astro.props;
 ---
 
-<SupportDetailContent app={app} />
+<SupportDetailContent product={product} />

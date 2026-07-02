@@ -1,5 +1,5 @@
 ---
-import TermsDetailContent from '../../../components/pages/TermsDetailContent.astro';
+import ProductDetailContent from '../../../components/pages/ProductDetailContent.astro';
 import { products } from '../../../data/products';
 
 export function getStaticPaths() {
@@ -9,4 +9,4 @@ export function getStaticPaths() {
 const { product } = Astro.props;
 ---
 
-<TermsDetailContent product={product} />
+<ProductDetailContent product={product} />

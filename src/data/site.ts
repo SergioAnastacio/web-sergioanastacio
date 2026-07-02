@@ -28,7 +28,7 @@ export const site = {
       title: 'Sergio Anastacio — Software Developer & Arquitecto de Soluciones IA',
       titleTemplate: '%s — Sergio Anastacio',
       description:
-        'Sergio Anastacio: Software Developer freelance con experiencia como Tech Lead y Arquitecto de Soluciones IA. Desarrollo de apps móviles, sistemas cloud, automatización y consultoría tecnológica.',
+        'Sergio Anastacio: Software Developer freelance con experiencia como Tech Lead y Arquitecto de Soluciones IA. Desarrollo de productos digitales, sistemas cloud, automatización y consultoría tecnológica.',
       author: 'Sergio Anastacio',
       jobTitle: 'Software Developer & Arquitecto de Soluciones IA',
     } satisfies SiteMeta,
@@ -36,13 +36,13 @@ export const site = {
       title: 'Sergio Anastacio — Software Developer & AI Solutions Architect',
       titleTemplate: '%s — Sergio Anastacio',
       description:
-        'Sergio Anastacio: freelance Software Developer and AI Solutions Architect. Mobile apps, cloud systems, automation, AI integration and technology consulting.',
+        'Sergio Anastacio: freelance Software Developer and AI Solutions Architect. Digital products, cloud systems, automation, AI integration and technology consulting.',
       author: 'Sergio Anastacio',
       jobTitle: 'Software Developer & AI Solutions Architect',
     } satisfies SiteMeta,
   },
   nav: [
-    { label: 'Apps', href: '/apps' },
+    { label: 'Products', href: '/productos' },
     { label: 'Portfolio', href: '/portfolio' },
     { label: 'Services', href: '/services' },
     { label: 'About', href: '/about' },
@@ -62,8 +62,14 @@ export function getSiteMeta(lang: Locale) {
 export function getAlternateUrls(path: string) {
   const cleanPath = path.replace(/^\/en/, '').replace(/\/$/, '') || '/';
   return site.locales.map((locale) => {
+    const localizedCleanPath =
+      locale === 'en' && (cleanPath === '/productos' || cleanPath.startsWith('/productos/'))
+        ? cleanPath.replace(/^\/productos/, '/products')
+        : locale === 'es' && (cleanPath === '/products' || cleanPath.startsWith('/products/'))
+          ? cleanPath.replace(/^\/products/, '/productos')
+          : cleanPath;
     const prefix = locale === site.defaultLocale ? '' : `/${locale}`;
-    const localizedPath = cleanPath === '/' ? prefix || '/' : `${prefix}${cleanPath}`;
+    const localizedPath = localizedCleanPath === '/' ? prefix || '/' : `${prefix}${localizedCleanPath}`;
     return { locale, url: new URL(localizedPath, site.url).toString() };
   });
 }

@@ -1,0 +1,52 @@
+---
+import ProductCard from '../ProductCard.astro';
+import CTA from '../CTA.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { products } from '../../data/products';
+import { mailto, site } from '../../data/site';
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const en = lang === 'en';
+const lp = (p: string) => getLocalizedPath(p, lang);
+const title = en ? 'Products — Sergio Anastacio' : 'Productos — Sergio Anastacio';
+const desc = en
+  ? 'Product catalog by Sergio Anastacio: mobile, desktop, web and platform software.'
+  : 'Catálogo de productos de Sergio Anastacio: software móvil, desktop, web y plataformas.';
+
+const categoryCounts = [
+  { label: en ? 'Desktop apps' : 'Apps desktop', value: products.filter((product) => product.category === 'Desktop').length },
+  { label: en ? 'Mobile apps' : 'Apps móviles', value: products.filter((product) => product.category === 'Mobile').length },
+  { label: en ? 'Web products' : 'Productos web', value: products.filter((product) => product.category === 'Web').length },
+].filter((category) => category.value > 0);
+---
+
+<SiteLayout title={title} description={desc} path={Astro.url.pathname}>
+  <section class="page-hero">
+    <p class="eyebrow">{t('products.hero.eyebrow')}</p>
+    <h1>{t('products.hero.title')}</h1>
+    <p>{t('products.hero.copy')}</p>
+    <div class="product-category-strip" aria-label={en ? 'Product categories' : 'Categorías de producto'}>
+      {categoryCounts.map((category) => (
+        <span><strong>{category.value}</strong>{category.label}</span>
+      ))}
+    </div>
+  </section>
+
+  <section class="section compact-section" aria-label={t('nav.products')}>
+    <div class="resource-grid">
+      {products.map((product) => <ProductCard product={product} />)}
+    </div>
+  </section>
+
+  <CTA
+    kicker={t('products.cta.kicker')}
+    title={t('products.cta.title')}
+    body={t('products.cta.body')}
+    primaryHref={mailto(site.emails.support, en ? 'Product support' : 'Soporte de productos')}
+    primaryLabel={site.emails.support}
+    secondaryHref={lp('/support')}
+    secondaryLabel={t('products.cta.secondary')}
+  />
+</SiteLayout>

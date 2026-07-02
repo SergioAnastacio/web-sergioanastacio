@@ -19,8 +19,22 @@ export function getLocalizedPath(path: string, lang: Lang): string {
   return `/en${clean}`;
 }
 
+export function getProductsPath(lang: Lang): string {
+  return lang === 'en' ? getLocalizedPath('/products', lang) : '/productos';
+}
+
+export function getProductPath(slug: string, lang: Lang): string {
+  return `${getProductsPath(lang)}/${slug}`;
+}
+
 export function getAlternatePath(pathname: string, targetLang: Lang): string {
-  const stripped = pathname.replace(/^\/en(\/|$)/, '$1');
+  let stripped = pathname.replace(/^\/en(\/|$)/, '$1') || '/';
+  if (targetLang === 'en' && (stripped === '/productos' || stripped.startsWith('/productos/'))) {
+    stripped = stripped.replace(/^\/productos/, '/products');
+  }
+  if (targetLang === 'es' && (stripped === '/products' || stripped.startsWith('/products/'))) {
+    stripped = stripped.replace(/^\/products/, '/productos');
+  }
   return getLocalizedPath(stripped || '/', targetLang);
 }
 

@@ -1,56 +1,62 @@
 ---
 import CTA from '../CTA.astro';
 import SiteLayout from '../../layouts/SiteLayout.astro';
-import type { AppInfo } from '../../data/apps';
+import type { ProductInfo } from '../../data/products';
 import { mailto, site } from '../../data/site';
 import { getLangFromUrl, getLocalizedPath, formatDate } from '../../i18n/utils';
 
 interface Props {
-  app: AppInfo;
+  product: ProductInfo;
 }
 
-const { app } = Astro.props;
+const { product } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const en = lang === 'en';
 const lp = (p: string) => getLocalizedPath(p, lang);
+const terms = product.terms;
+const summary = en && terms.summaryEn ? terms.summaryEn : terms.summary;
+const usage = en && terms.usageEn ? terms.usageEn : terms.usage;
+const accounts = en && terms.accountsEn ? terms.accountsEn : terms.accounts;
+const subscriptions = en && terms.subscriptionsEn ? terms.subscriptionsEn : terms.subscriptions;
+const limitations = en && terms.limitationsEn ? terms.limitationsEn : terms.limitations;
 ---
 
 <SiteLayout
-  title={`Terms of Use for ${app.name} — Sergio Anastacio`}
-  description={en ? `Terms of use for ${app.name}.` : `Términos de uso para ${app.name}.`}
+  title={`Terms of Use for ${product.name} — Sergio Anastacio`}
+  description={en ? `Terms of use for ${product.name}.` : `Términos de uso para ${product.name}.`}
   path={Astro.url.pathname}
 >
   <section class="page-hero">
     <p class="eyebrow">{en ? 'Terms of Use' : 'Términos de Uso'}</p>
-    <h1>{en ? 'Terms of Use for' : 'Términos de Uso de'} {app.name}</h1>
-    <p>{en ? 'Last updated:' : 'Última actualización:'} {formatDate(app.terms.lastUpdated, lang)}</p>
+    <h1>{en ? 'Terms of Use for' : 'Términos de Uso de'} {product.name}</h1>
+    <p>{en ? 'Last updated:' : 'Última actualización:'} {formatDate(terms.lastUpdated, lang)}</p>
   </section>
 
   <section class="section legal-copy">
     <h2>{en ? 'Acceptance of terms' : 'Aceptación de términos'}</h2>
-    <p>{app.terms.summary}</p>
-    <h2>{en ? 'Use of the app' : 'Uso de la app'}</h2>
-    <ul>{app.terms.usage.map((item) => <li>{item}</li>)}</ul>
+    <p>{summary}</p>
+    <h2>{en ? 'Use of the product' : 'Uso del producto'}</h2>
+    <ul>{usage.map((item) => <li>{item}</li>)}</ul>
     <h2>{en ? 'Accounts' : 'Cuentas'}</h2>
-    <p>{app.terms.accounts}</p>
+    <p>{accounts}</p>
     <h2>{en ? 'Subscriptions and payments' : 'Suscripciones y pagos'}</h2>
-    <p>{app.terms.subscriptions}</p>
+    <p>{subscriptions}</p>
     <h2>{en ? 'Limitations' : 'Limitaciones'}</h2>
-    <p>{app.terms.limitations}</p>
+    <p>{limitations}</p>
     <h2>{en ? 'Changes and contact' : 'Cambios y contacto'}</h2>
     <p>
       {en
         ? 'These terms may be updated as the product evolves. The most current version is always available on this page. For questions, write to '
         : 'Estos términos pueden actualizarse conforme el producto evolucione. La versión vigente está siempre disponible en esta página. Para preguntas, escribe a '}
-      <a href={mailto(site.emails.apps, `Términos ${app.name}`)}>{site.emails.apps}</a>.
+      <a href={mailto(site.emails.apps, `Términos ${product.name}`)}>{site.emails.apps}</a>.
     </p>
   </section>
 
   <CTA
     title={en ? 'Need support?' : '¿Necesitas soporte?'}
-    primaryHref={lp(`/support/${app.slug}`)}
-    primaryLabel={en ? `Support for ${app.name}` : `Soporte de ${app.name}`}
-    secondaryHref={lp(`/privacy/${app.slug}`)}
+    primaryHref={lp(`/support/${product.slug}`)}
+    primaryLabel={en ? `Support for ${product.name}` : `Soporte de ${product.name}`}
+    secondaryHref={lp(`/privacy/${product.slug}`)}
     secondaryLabel={en ? 'Privacy Policy' : 'Política de Privacidad'}
   />
 </SiteLayout>
