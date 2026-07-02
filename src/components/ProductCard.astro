@@ -1,0 +1,54 @@
+---
+import type { ProductInfo } from '../data/products';
+import { getProductDescription } from '../data/products';
+import { getLangFromUrl, useTranslations, getLocalizedPath, getProductPath } from '../i18n/utils';
+
+interface Props {
+  product: ProductInfo;
+}
+
+const { product } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const en = lang === 'en';
+const t = useTranslations(lang);
+const lp = (p: string) => getLocalizedPath(p, lang);
+const href = getProductPath(product.slug, lang);
+const statusClass = product.concept ? 'concept-pill' : 'status-pill';
+const statusData = product.concept ? 'Concept' : product.status;
+const statusLabel = product.concept
+  ? t('concept.badge')
+  : en && product.statusNoteEn
+    ? product.statusNoteEn
+    : product.statusNote ?? product.status;
+
+const categoryLabels: Record<ProductInfo['category'], string> = {
+  Mobile: en ? 'Mobile' : 'Móvil',
+  Desktop: 'Desktop',
+  Web: 'Web',
+  Platform: en ? 'Platform' : 'Plataforma',
+};
+---
+
+<article class={`resource-card product-card ${product.featured ? 'is-featured' : ''}`}>
+  <div class="card-header">
+    <div class="product-card__topline">
+      <p class={statusClass} data-status={statusData}>{statusLabel}</p>
+      <span class="category-pill">{categoryLabels[product.category]}</span>
+    </div>
+    <h3 class="h4"><a href={href}>{product.name}</a></h3>
+  </div>
+  <p>{getProductDescription(product, en)}</p>
+  <div class="meta-row" aria-label={en ? `Platforms for ${product.name}` : `Plataformas para ${product.name}`}>
+    {product.platforms.map((platform) => <span>{platform}</span>)}
+  </div>
+  <div class="card-links">
+    <a href={href}>{t('card.viewproduct')}</a>
+    {product.downloadUrl && (
+      <a href={product.downloadUrl} download>
+        {en ? 'Download demo' : 'Descargar demo'}
+      </a>
+    )}
+    <a href={lp(`/privacy/${product.slug}`)}>{t('card.privacy')}</a>
+    <a href={lp(`/support/${product.slug}`)}>{t('card.support')}</a>
+  </div>
+</article>

@@ -31,7 +31,7 @@ const en = lang === 'en';
             <p class="status-pill">{release.released}</p>
             <h2>{en ? 'Version' : 'Versión'} {release.version}</h2>
             <ul>
-              {release.changes.map((change) => <li>{change}</li>)}
+              {(en && release.changesEn ? release.changesEn : release.changes).map((change) => <li>{change}</li>)}
             </ul>
           </article>
         ))

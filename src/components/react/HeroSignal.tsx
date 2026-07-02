@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 
 const signals = [
   {
-    label: 'Mobile Apps',
-    detail: 'iOS / Android product URLs',
+    label: 'Digital Products',
+    detail: 'Mobile, desktop and web',
   },
   {
     label: 'Cloud Systems',

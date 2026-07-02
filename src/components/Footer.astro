@@ -1,6 +1,6 @@
 ---
 import { mailto, site } from '../data/site';
-import { getLangFromUrl, useTranslations, getLocalizedPath } from '../i18n/utils';
+import { getLangFromUrl, useTranslations, getLocalizedPath, getProductsPath } from '../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -10,7 +10,7 @@ const groups = [
   {
     title: t('footer.products'),
     links: [
-      { label: t('nav.apps'), href: lp('/apps') },
+      { label: t('nav.products'), href: getProductsPath(lang) },
       { label: 'Support', href: lp('/support') },
       { label: 'Privacy', href: lp('/privacy') },
     ],

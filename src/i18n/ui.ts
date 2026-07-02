@@ -9,6 +9,7 @@ export const defaultLang: Lang = 'es';
 export const ui = {
   es: {
     'nav.home': 'Inicio',
+    'nav.products': 'Productos',
     'nav.apps': 'Apps',
     'nav.portfolio': 'Portfolio',
     'nav.services': 'Servicios',
@@ -24,17 +25,17 @@ export const ui = {
     'home.hero.eyebrow': 'Software Developer, AI Solutions Architect & Tech Lead',
     'home.hero.title': 'Sergio Anastacio',
     'home.hero.copy':
-      'Diseño y construyo apps móviles, sistemas cloud, automatización e integraciones con IA. Software claro, mantenible y listo para escalar.',
-    'home.hero.cta.apps': 'Ver Apps',
+      'Diseño y construyo productos digitales, sistemas cloud, automatización e integraciones con IA. Software claro, mantenible y listo para escalar.',
+    'home.hero.cta.apps': 'Ver productos',
     'home.hero.cta.contact': 'Contáctame',
 
     'home.summary.kicker': 'Software Developer Freelance',
     'home.summary.title': 'Arquitectura, código y despliegue para productos reales.',
     'home.summary.copy':
-      'Hub público para apps móviles, soporte, privacidad, portfolio y servicios profesionales de un software developer con experiencia como Tech Lead y Arquitecto de Soluciones IA.',
-    'home.summary.mobile': 'Mobile Apps',
+      'Hub público para productos, soporte, privacidad, portfolio y servicios profesionales de un software developer con experiencia como Tech Lead y Arquitecto de Soluciones IA.',
+    'home.summary.mobile': 'Apps y productos',
     'home.summary.mobile.copy':
-      'Desarrollo de apps iOS y Android con landing, soporte y privacidad por producto.',
+      'Aplicaciones móviles, desktop y web con landing, soporte y privacidad por producto.',
     'home.summary.cloud': 'Cloud Systems',
     'home.summary.cloud.copy':
       'APIs, automatización, despliegues y flujos operativos diseñados para crecer sin fricción.',
@@ -42,14 +43,14 @@ export const ui = {
     'home.summary.ai.copy':
       'Integraciones con IA para reducir tareas repetitivas y convertir contexto técnico en acciones.',
 
-    'home.apps.kicker': 'Apps',
-    'home.apps.title': 'Apps móviles bajo la marca Sergio Anastacio.',
+    'home.apps.kicker': 'Productos',
+    'home.apps.title': 'Productos destacados bajo la marca Sergio Anastacio.',
     'home.apps.cta': 'Ver todas',
 
     'home.services.kicker': 'Servicios',
     'home.services.title': 'Servicios para clientes, equipos y productos digitales.',
-    'home.services.1.title': 'Mobile App Development',
-    'home.services.1.copy': 'Apps iOS y Android con arquitectura limpia, integración de APIs y publicación escalable.',
+    'home.services.1.title': 'Product & App Development',
+    'home.services.1.copy': 'Apps móviles, desktop y web con arquitectura limpia, integración de APIs y publicación escalable.',
     'home.services.2.title': 'Backend APIs & DevOps',
     'home.services.2.copy': 'Servicios .NET, bases de datos, CI/CD, Docker, GitHub Actions y automatización cloud.',
     'home.services.3.title': 'AI Integration',
@@ -60,11 +61,20 @@ export const ui = {
     'home.portfolio.cta': 'Ver portfolio',
 
     'home.cta.kicker': 'Contacto',
-    'home.cta.title': 'Hablemos de apps, APIs, automatización o IA.',
+    'home.cta.title': 'Hablemos de productos, APIs, automatización o IA.',
     'home.cta.body':
-      'Para oportunidades profesionales, soporte de apps o colaboración técnica, escríbeme al correo más adecuado.',
+      'Para oportunidades profesionales, soporte de productos o colaboración técnica, escríbeme al correo más adecuado.',
     'home.cta.secondary': 'Ver opciones',
 
+    'products.hero.eyebrow': 'Productos',
+    'products.hero.title': 'Apps, sistemas desktop y productos web.',
+    'products.hero.copy':
+      'Catálogo de productos desarrollados bajo la marca Sergio Anastacio: aplicaciones móviles, desktop, web y plataformas listas para evolucionar.',
+    'products.cta.kicker': 'Productos',
+    'products.cta.title': '¿Quieres una demo o soporte de producto?',
+    'products.cta.body':
+      'Escríbeme para revisar un producto, solicitar una demo o reportar dudas relacionadas con soporte, privacidad o publicación.',
+    'products.cta.secondary': 'Centro de soporte',
     'apps.hero.eyebrow': 'Apps Móviles',
     'apps.hero.title': 'Catálogo de apps iOS y Android.',
     'apps.hero.copy':
@@ -75,12 +85,13 @@ export const ui = {
       'Escríbeme al correo de soporte para reportar bugs, dudas de privacidad o solicitudes relacionadas con productos móviles.',
     'apps.cta.secondary': 'Centro de soporte',
     'card.viewapp': 'Ver App',
+    'card.viewproduct': 'Ver producto',
     'card.privacy': 'Privacidad',
     'card.support': 'Soporte',
 
     'portfolio.hero.eyebrow': 'Portfolio',
     'portfolio.hero.title': 'Casos de estudio de desarrollo de software.',
-    'portfolio.hero.copy': 'Casos de estudio técnicos que muestran cómo abordo arquitectura de software, apps móviles, automatización e integraciones con IA para clientes y productos.',
+    'portfolio.hero.copy': 'Casos de estudio técnicos que muestran cómo abordo arquitectura de software, productos digitales, automatización e integraciones con IA para clientes y productos.',
     'portfolio.cta.kicker': 'Colaboración',
     'portfolio.cta.title': '¿Quieres revisar un caso técnico o construir algo similar?',
     'portfolio.cta.secondary': 'Ver servicios',
@@ -89,7 +100,7 @@ export const ui = {
     'services.hero.eyebrow': 'Servicios',
     'services.hero.title': 'Servicios de desarrollo de software freelance.',
     'services.hero.copy':
-      'Consultoría y desarrollo de software para empresas, startups y equipos que necesitan apps móviles, APIs, automatización, DevOps e integraciones con IA.',
+      'Consultoría y desarrollo de software para empresas, startups y equipos que necesitan productos digitales, APIs, automatización, DevOps e integraciones con IA.',
     'services.cta.kicker': 'Empecemos',
     'services.cta.title': 'Cuéntame qué necesitas construir.',
     'services.cta.body':
@@ -99,7 +110,7 @@ export const ui = {
     'about.hero.eyebrow': 'Acerca',
     'about.hero.title': 'Sergio Anastacio, Software Developer.',
     'about.hero.copy':
-      'Software developer con experiencia como Tech Lead y Arquitecto de Soluciones IA. Me especializo en apps móviles, arquitectura backend, automatización DevOps y sistemas con IA.',
+      'Software developer con experiencia como Tech Lead y Arquitecto de Soluciones IA. Me especializo en productos digitales, arquitectura backend, automatización DevOps y sistemas con IA.',
     'about.profile.kicker': 'Perfil',
     'about.profile.title': 'Construyo software claro para usuarios y operable para equipos técnicos.',
     'about.profile.p1':
@@ -116,10 +127,10 @@ export const ui = {
       '¿Tienes un proyecto, oportunidad profesional o duda sobre una app? Escríbeme al correo adecuado y respondo lo antes posible.',
     'contact.option1': 'Negocios y profesional',
     'contact.option1.copy': 'Clientes, entrevistas, colaboración profesional y oportunidades generales.',
-    'contact.option2': 'Soporte de apps',
-    'contact.option2.copy': 'Soporte, errores, dudas de uso y reportes relacionados con apps móviles.',
-    'contact.option3': 'Apps y privacidad',
-    'contact.option3.copy': 'Consultas sobre privacidad, publicación en tiendas y políticas de apps.',
+    'contact.option2': 'Soporte de productos',
+    'contact.option2.copy': 'Soporte, errores, dudas de uso y reportes relacionados con productos publicados o en beta.',
+    'contact.option3': 'Productos y privacidad',
+    'contact.option3.copy': 'Consultas sobre privacidad, publicación, licencias y políticas de productos.',
     'contact.send': 'Enviar correo',
 
     'concept.badge': 'Concepto · No publicado',
@@ -129,7 +140,7 @@ export const ui = {
     'signal.header.left': 'Áreas activas',
     'signal.header.right': 'Static-first Astro',
 
-    'footer.tagline': 'Software developer building mobile apps, cloud systems, automation and AI-powered products.',
+    'footer.tagline': 'Software developer building digital products, cloud systems, automation and AI-powered systems.',
     'footer.products': 'Productos',
     'footer.professional': 'Profesional',
     'footer.legal': 'Legal',
@@ -138,6 +149,7 @@ export const ui = {
   },
   en: {
     'nav.home': 'Home',
+    'nav.products': 'Products',
     'nav.apps': 'Apps',
     'nav.portfolio': 'Portfolio',
     'nav.services': 'Services',
@@ -153,17 +165,17 @@ export const ui = {
     'home.hero.eyebrow': 'Software Developer, AI Solutions Architect & Tech Lead',
     'home.hero.title': 'Sergio Anastacio',
     'home.hero.copy':
-      'I design and build mobile apps, cloud systems, automation and AI integrations. Clear, maintainable software ready to scale.',
-    'home.hero.cta.apps': 'View Apps',
+      'I design and build digital products, cloud systems, automation and AI integrations. Clear, maintainable software ready to scale.',
+    'home.hero.cta.apps': 'View Products',
     'home.hero.cta.contact': 'Contact Me',
 
     'home.summary.kicker': 'Freelance Software Developer',
     'home.summary.title': 'Architecture, code and deployment for real products.',
     'home.summary.copy':
-      'Public hub for mobile apps, support, privacy, portfolio and professional services from a software developer with experience as Tech Lead and AI Solutions Architect.',
-    'home.summary.mobile': 'Mobile Apps',
+      'Public hub for products, support, privacy, portfolio and professional services from a software developer with experience as Tech Lead and AI Solutions Architect.',
+    'home.summary.mobile': 'Apps & Products',
     'home.summary.mobile.copy':
-      'iOS and Android app development with landing, support and privacy per product.',
+      'Mobile, desktop and web applications with landing, support and privacy per product.',
     'home.summary.cloud': 'Cloud Systems',
     'home.summary.cloud.copy':
       'APIs, automation, deployments and operational workflows designed to scale without friction.',
@@ -171,14 +183,14 @@ export const ui = {
     'home.summary.ai.copy':
       'AI integrations that reduce repetitive tasks and turn technical context into actions.',
 
-    'home.apps.kicker': 'Apps',
-    'home.apps.title': 'Mobile apps under the Sergio Anastacio brand.',
+    'home.apps.kicker': 'Products',
+    'home.apps.title': 'Featured products under the Sergio Anastacio brand.',
     'home.apps.cta': 'View all',
 
     'home.services.kicker': 'Services',
     'home.services.title': 'Services for clients, teams and digital products.',
-    'home.services.1.title': 'Mobile App Development',
-    'home.services.1.copy': 'iOS and Android apps with clean architecture, API integration and scalable publishing.',
+    'home.services.1.title': 'Product & App Development',
+    'home.services.1.copy': 'Mobile, desktop and web apps with clean architecture, API integration and scalable publishing.',
     'home.services.2.title': 'Backend APIs & DevOps',
     'home.services.2.copy': '.NET services, databases, CI/CD, Docker, GitHub Actions and cloud automation.',
     'home.services.3.title': 'AI Integration',
@@ -189,11 +201,20 @@ export const ui = {
     'home.portfolio.cta': 'View portfolio',
 
     'home.cta.kicker': 'Contact',
-    'home.cta.title': "Let's talk about apps, APIs, automation or AI.",
+    'home.cta.title': "Let's talk about products, APIs, automation or AI.",
     'home.cta.body':
-      'For professional opportunities, app support or technical collaboration, reach out to the most suitable email.',
+      'For professional opportunities, product support or technical collaboration, reach out to the most suitable email.',
     'home.cta.secondary': 'View options',
 
+    'products.hero.eyebrow': 'Products',
+    'products.hero.title': 'Apps, desktop systems and web products.',
+    'products.hero.copy':
+      'Product catalog developed under the Sergio Anastacio brand: mobile, desktop, web and platform products ready to evolve.',
+    'products.cta.kicker': 'Products',
+    'products.cta.title': 'Need a demo or product support?',
+    'products.cta.body':
+      'Reach out to review a product, request a demo or ask about support, privacy or publishing.',
+    'products.cta.secondary': 'Support hub',
     'apps.hero.eyebrow': 'Mobile Apps',
     'apps.hero.title': 'iOS and Android app catalog.',
     'apps.hero.copy':
@@ -204,12 +225,13 @@ export const ui = {
       'Reach the support email to report bugs, ask about privacy or send requests related to mobile products.',
     'apps.cta.secondary': 'Support hub',
     'card.viewapp': 'View App',
+    'card.viewproduct': 'View Product',
     'card.privacy': 'Privacy',
     'card.support': 'Support',
 
     'portfolio.hero.eyebrow': 'Portfolio',
     'portfolio.hero.title': 'Software development case studies.',
-    'portfolio.hero.copy': 'Technical case studies showing how I approach software architecture, mobile apps, automation and AI integrations for clients and products.',
+    'portfolio.hero.copy': 'Technical case studies showing how I approach software architecture, digital products, automation and AI integrations for clients and products.',
     'portfolio.cta.kicker': 'Collaboration',
     'portfolio.cta.title': 'Want to review a technical case or build something similar?',
     'portfolio.cta.secondary': 'Services',
@@ -218,7 +240,7 @@ export const ui = {
     'services.hero.eyebrow': 'Services',
     'services.hero.title': 'Freelance software development services.',
     'services.hero.copy':
-      'Software consulting and development for companies, startups and teams that need mobile apps, APIs, automation, DevOps and AI integrations.',
+      'Software consulting and development for companies, startups and teams that need digital products, APIs, automation, DevOps and AI integrations.',
     'services.cta.kicker': 'Start',
     'services.cta.title': 'Tell me what you need to build.',
     'services.cta.body':
@@ -228,7 +250,7 @@ export const ui = {
     'about.hero.eyebrow': 'About',
     'about.hero.title': 'Sergio Anastacio, Software Developer.',
     'about.hero.copy':
-      'Software developer with experience as Tech Lead and AI Solutions Architect. I specialize in mobile apps, backend architecture, DevOps automation and AI-powered systems.',
+      'Software developer with experience as Tech Lead and AI Solutions Architect. I specialize in digital products, backend architecture, DevOps automation and AI-powered systems.',
     'about.profile.kicker': 'Profile',
     'about.profile.title': 'I build clear software for users and operable systems for technical teams.',
     'about.profile.p1':
@@ -245,10 +267,10 @@ export const ui = {
       'Have a project, professional opportunity or question about an app? Email the right address and I will reply as soon as possible.',
     'contact.option1': 'Business & professional',
     'contact.option1.copy': 'Clients, interviews, professional collaboration and general opportunities.',
-    'contact.option2': 'App support',
-    'contact.option2.copy': 'Support, bugs, usage questions and reports related to mobile apps.',
-    'contact.option3': 'Apps & privacy',
-    'contact.option3.copy': 'Questions about privacy, store publishing and app policies.',
+    'contact.option2': 'Product support',
+    'contact.option2.copy': 'Support, bugs, usage questions and reports related to published or beta products.',
+    'contact.option3': 'Products & privacy',
+    'contact.option3.copy': 'Questions about privacy, publishing, licenses and product policies.',
     'contact.send': 'Send email',
 
     'concept.badge': 'Concept · Not published',
@@ -258,7 +280,7 @@ export const ui = {
     'signal.header.left': 'Active build areas',
     'signal.header.right': 'Static-first Astro',
 
-    'footer.tagline': 'Software developer building mobile apps, cloud systems, automation and AI-powered products.',
+    'footer.tagline': 'Software developer building digital products, cloud systems, automation and AI-powered systems.',
     'footer.products': 'Products',
     'footer.professional': 'Professional',
     'footer.legal': 'Legal',

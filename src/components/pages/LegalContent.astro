@@ -1,8 +1,8 @@
 ---
 import SiteLayout from '../../layouts/SiteLayout.astro';
-import { apps } from '../../data/apps';
+import { products } from '../../data/products';
 import { mailto, site } from '../../data/site';
-import { getLangFromUrl, getLocalizedPath } from '../../i18n/utils';
+import { getLangFromUrl, getLocalizedPath, getProductPath } from '../../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const en = lang === 'en';
@@ -26,7 +26,7 @@ const lp = (p: string) => getLocalizedPath(p, lang);
       <a href={lp('/terms')}>{en ? 'Terms of Use' : 'Términos de Uso'}</a>
       <a href={lp('/support')}>{en ? 'Support' : 'Soporte'}</a>
       <a href={lp('/contact')}>{en ? 'Contact' : 'Contacto'}</a>
-      {apps.map((app) => <a href={lp(`/apps/${app.slug}`)}>{app.name} {en ? 'App Website' : 'Sitio de la App'}</a>)}
+      {products.map((product) => <a href={getProductPath(product.slug, lang)}>{product.name} {en ? 'Product Website' : 'Sitio del producto'}</a>)}
     </div>
   </section>
 
@@ -38,7 +38,7 @@ const lp = (p: string) => getLocalizedPath(p, lang);
     <div class="contact-list">
       <a href={mailto(site.emails.contact, en ? 'Legal contact' : 'Contacto legal')}>{site.emails.contact}</a>
       <a href={mailto(site.emails.support, en ? 'Legal support' : 'Soporte legal')}>{site.emails.support}</a>
-      <a href={mailto(site.emails.apps, en ? 'Apps & privacy' : 'Apps y privacidad')}>{site.emails.apps}</a>
+      <a href={mailto(site.emails.apps, en ? 'Products & privacy' : 'Productos y privacidad')}>{site.emails.apps}</a>
     </div>
   </section>
 </SiteLayout>

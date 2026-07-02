@@ -1,6 +1,6 @@
 ---
 import SiteLayout from '../../layouts/SiteLayout.astro';
-import { apps } from '../../data/apps';
+import { products } from '../../data/products';
 import { getLangFromUrl, getLocalizedPath } from '../../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
@@ -10,18 +10,18 @@ const lp = (p: string) => getLocalizedPath(p, lang);
 
 <SiteLayout
   title="Privacy Policies — Sergio Anastacio"
-  description={en ? 'Privacy policies for apps and products by Sergio Anastacio.' : 'Políticas de privacidad para apps y productos de Sergio Anastacio.'}
+  description={en ? 'Privacy policies for products by Sergio Anastacio.' : 'Políticas de privacidad para productos de Sergio Anastacio.'}
   path={Astro.url.pathname}
 >
   <section class="page-hero">
     <p class="eyebrow">{en ? 'Privacy Policies' : 'Políticas de Privacidad'}</p>
     <h1>{en ? 'Privacy policies by product.' : 'Políticas de privacidad por producto.'}</h1>
-    <p>{en ? 'Select an app to review its data practices, support and contact.' : 'Selecciona una app para consultar sus prácticas de datos, soporte y contacto.'}</p>
+    <p>{en ? 'Select a product to review its data practices, support and contact.' : 'Selecciona un producto para consultar sus prácticas de datos, soporte y contacto.'}</p>
   </section>
 
   <section class="section compact-section">
     <div class="link-grid">
-      {apps.map((app) => <a href={lp(`/privacy/${app.slug}`)}>{app.name} {en ? 'Privacy Policy' : 'Política de Privacidad'}</a>)}
+      {products.map((product) => <a href={lp(`/privacy/${product.slug}`)}>{product.name} {en ? 'Privacy Policy' : 'Política de Privacidad'}</a>)}
     </div>
   </section>
 </SiteLayout>

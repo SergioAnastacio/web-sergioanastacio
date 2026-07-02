@@ -2,6 +2,7 @@
 import CTA from '../CTA.astro';
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import type { AppInfo } from '../../data/apps';
+import { getProductDescription, getProductFeatures, getProductTagline } from '../../data/products';
 import { mailto, site } from '../../data/site';
 import { getLangFromUrl, useTranslations, getLocalizedPath } from '../../i18n/utils';
 
@@ -16,13 +17,16 @@ const lp = (p: string) => getLocalizedPath(p, lang);
 const title = `${app.name} — Sergio Anastacio Apps`;
 const statusLabel = app.concept ? t('concept.badge') : app.status;
 const en = lang === 'en';
+const description = getProductDescription(app, en);
+const tagline = getProductTagline(app, en);
+const features = getProductFeatures(app, en);
 ---
 
-<SiteLayout title={title} description={app.description} path={Astro.url.pathname}>
+<SiteLayout title={title} description={description} path={Astro.url.pathname}>
   <section class="page-hero app-hero">
     <p class="eyebrow">{statusLabel}</p>
     <h1>{app.name}</h1>
-    <p>{app.tagline}</p>
+    <p>{tagline}</p>
     {
       app.concept && (
         <p class="concept-notice">{t('concept.notice')}</p>
@@ -54,7 +58,7 @@ const en = lang === 'en';
     <div>
       <p class="section-kicker">{en ? 'Overview' : 'Resumen'}</p>
       <h2 id="app-overview">{en ? 'What it is' : 'Qué es'}</h2>
-      <p class="lead">{app.description}</p>
+      <p class="lead">{description}</p>
     </div>
     <div class="detail-panel">
       <h3 class="h5">{en ? 'Platform availability' : 'Plataformas'}</h3>
@@ -72,7 +76,7 @@ const en = lang === 'en';
       <h2 id="features-title">{en ? 'Planned core features.' : 'Funciones principales planeadas.'}</h2>
     </div>
     <div class="feature-grid">
-      {app.features.map((feature) => <article class="feature-card"><p>{feature}</p></article>)}
+      {features.map((feature) => <article class="feature-card"><p>{feature}</p></article>)}
     </div>
   </section>
 

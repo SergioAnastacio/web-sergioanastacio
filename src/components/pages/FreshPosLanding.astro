@@ -1,0 +1,293 @@
+---
+import CTA from '../CTA.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import type { ProductInfo } from '../../data/products';
+import { getProductDescription, getProductFeatures, getProductTagline } from '../../data/products';
+import { mailto, site } from '../../data/site';
+import { getLangFromUrl, getLocalizedPath } from '../../i18n/utils';
+
+interface Props {
+  product: ProductInfo;
+}
+
+const { product } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const en = lang === 'en';
+const lp = (p: string) => getLocalizedPath(p, lang);
+const title = en ? 'Fresh-Pos — Desktop POS for retail stores' : 'Fresh-Pos — Punto de venta desktop para comercios';
+const description = getProductDescription(product, en);
+const features = getProductFeatures(product, en);
+const modules = product.modules ?? [];
+const plans = product.plans ?? [];
+
+const segments = en
+  ? ['Grocery shops', 'Stationery stores', 'Boutiques', 'Cosmetics shops', 'Small hardware stores', 'Local mini markets']
+  : ['Abarrotes', 'Papelerías', 'Boutiques', 'Cosméticos', 'Ferreterías pequeñas', 'Mini súper local'];
+
+const metrics = en
+  ? [
+      ['1 register', 'Desktop-first local operation'],
+      ['100-2,000 products', 'Ideal validation range'],
+      ['60-90 days', 'Private pilot window'],
+    ]
+  : [
+      ['1 caja', 'Operación local desktop-first'],
+      ['100-2,000 productos', 'Rango ideal de validación'],
+      ['60-90 días', 'Ventana de piloto privado'],
+    ];
+
+const roadmap = en
+  ? [
+      ['Core Local', 'POS, inventory, cash register, tickets and local reports.'],
+      ['Control Cloud', 'Backups, synchronization, higher capacity and support.'],
+      ['Intelligence', 'AI assistant for sales, inventory and cash questions.'],
+      ['Fiscal', 'Electronic invoicing and fiscal document workflow.'],
+    ]
+  : [
+      ['Core Local', 'POS, inventario, caja, tickets y reportes locales.'],
+      ['Control Cloud', 'Respaldos, sincronización, mayor capacidad y soporte.'],
+      ['Intelligence', 'Asistente IA para preguntas sobre ventas, inventario y caja.'],
+      ['Fiscal', 'Facturación electrónica y flujo de documentos fiscales.'],
+    ];
+
+const stack = ['Electron', 'React + TypeScript', 'SQLite local', 'Windows installer', 'Auto update', 'Feature flags'];
+---
+
+<SiteLayout title={title} description={description} path={Astro.url.pathname} section="Products">
+  <section class="fresh-hero">
+    <div class="fresh-hero__copy">
+      <div class="fresh-brand-lockup">
+        {product.iconUrl && <img src={product.iconUrl} alt="" width="56" height="56" loading="eager" decoding="async" />}
+        <div>
+          <p class="eyebrow">{en ? 'Desktop POS · Windows' : 'POS desktop · Windows'}</p>
+          <strong>{product.productName ?? product.name}</strong>
+        </div>
+      </div>
+      <h1>{product.name}</h1>
+      <p class="hero-copy">{getProductTagline(product, en)}</p>
+      <div class="fresh-status-row">
+        <span>{en && product.statusNoteEn ? product.statusNoteEn : product.statusNote}</span>
+        <span>{en ? 'Private pilot' : 'Piloto privado'}</span>
+        <span>{en ? 'Local-first' : 'Local-first'}</span>
+      </div>
+      <div class="hero-actions">
+        {product.downloadUrl && (
+          <a class="primary-link fresh-primary" href={product.downloadUrl} download>
+            {en ? 'Download demo' : 'Descargar demo'}
+          </a>
+        )}
+        <a class={product.downloadUrl ? 'secondary-link' : 'primary-link fresh-primary'} href={mailto(site.emails.contact, en ? 'Fresh-Pos demo' : 'Demo Fresh-Pos')}>
+          {en ? 'Request demo' : 'Solicitar demo'}
+        </a>
+        <a class="secondary-link" href={lp(`/support/${product.slug}`)}>
+          {en ? 'Support and FAQ' : 'Soporte y FAQ'}
+        </a>
+      </div>
+    </div>
+
+    <div class="fresh-product-shot" aria-label={en ? 'Fresh-Pos product interface preview' : 'Vista previa de interfaz Fresh-Pos'}>
+      <div class="fresh-window">
+        <div class="fresh-window__titlebar">
+          <span class="fresh-logo">FR</span>
+          <span>Fresh Retail Core</span>
+          <div class="fresh-window__dots"><i></i><i></i><i></i></div>
+        </div>
+        <div class="fresh-window__body">
+          <aside class="fresh-sidebar">
+            <strong>{en ? 'Store' : 'Tienda'}</strong>
+            <span class="is-active">POS</span>
+            <span>{en ? 'Inventory' : 'Inventario'}</span>
+            <span>{en ? 'Cash' : 'Caja'}</span>
+            <span>{en ? 'Reports' : 'Reportes'}</span>
+          </aside>
+          <div class="fresh-workspace">
+            <div class="fresh-topbar">
+              <div>
+                <small>{en ? 'New sale' : 'Nueva venta'}</small>
+                <strong>{en ? 'Counter 01' : 'Caja 01'}</strong>
+              </div>
+              <span>{en ? 'Local mode' : 'Modo local'}</span>
+            </div>
+            <div class="fresh-metrics">
+              <div><small>{en ? 'Today' : 'Hoy'}</small><strong>$8,240</strong></div>
+              <div><small>{en ? 'Products' : 'Productos'}</small><strong>428</strong></div>
+              <div><small>{en ? 'Low stock' : 'Stock bajo'}</small><strong>12</strong></div>
+            </div>
+            <div class="fresh-pos-grid">
+              <div class="fresh-sale-panel">
+                <span>{en ? 'Scan or search product' : 'Escanear o buscar producto'}</span>
+                <div class="fresh-product-row"><strong>Café molido 500g</strong><em>$86.00</em></div>
+                <div class="fresh-product-row"><strong>Cuaderno profesional</strong><em>$42.00</em></div>
+                <div class="fresh-product-row"><strong>Bolsa reutilizable</strong><em>$18.00</em></div>
+              </div>
+              <div class="fresh-ticket">
+                <small>{en ? 'Ticket preview' : 'Vista de ticket'}</small>
+                <strong>Fresh Retail</strong>
+                <span>Subtotal $146.00</span>
+                <span>IVA $23.36</span>
+                <b>Total $169.36</b>
+                <button type="button">{en ? 'Charge sale' : 'Cobrar venta'}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section fresh-intro" aria-labelledby="fresh-positioning">
+    <div class="section-heading split-heading">
+      <div>
+        <p class="section-kicker">{en ? 'Positioning' : 'Posicionamiento'}</p>
+        <h2 id="fresh-positioning">
+          {en ? 'Built for stores that need control at the counter.' : 'Hecho para tiendas que necesitan control en caja.'}
+        </h2>
+      </div>
+      <p>{description}</p>
+    </div>
+    <div class="feature-grid">
+      {features.slice(0, 3).map((feature) => <article class="feature-card"><p>{feature}</p></article>)}
+    </div>
+  </section>
+
+  <section class="section section-tint" aria-labelledby="fresh-metrics">
+    <div class="fresh-metric-band" id="fresh-metrics">
+      {metrics.map(([value, label]) => (
+        <article>
+          <strong>{value}</strong>
+          <span>{label}</span>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="fresh-modules">
+    <div class="section-heading split-heading">
+      <div>
+        <p class="section-kicker">{en ? 'Modules' : 'Módulos'}</p>
+        <h2 id="fresh-modules">{en ? 'The first product surface is operational.' : 'La primera superficie del producto es operativa.'}</h2>
+      </div>
+      <p>
+        {en
+          ? 'The core focuses on the daily loop: products, stock, sale, payment, ticket and cash closing.'
+          : 'El core se enfoca en el ciclo diario: productos, stock, venta, cobro, ticket y cierre de caja.'}
+      </p>
+    </div>
+    <div class="fresh-module-grid">
+      {modules.map((module) => (
+        <article class="detail-panel">
+          <h3 class="h5">{en && module.titleEn ? module.titleEn : module.title}</h3>
+          <p>{en && module.copyEn ? module.copyEn : module.copy}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section-tint" aria-labelledby="fresh-market">
+    <div class="two-panel">
+      <div>
+        <p class="section-kicker">{en ? 'Initial market' : 'Mercado inicial'}</p>
+        <h2 id="fresh-market">
+          {en ? 'Small and medium stores with real counter friction.' : 'Comercios pequeños y medianos con fricción real en caja.'}
+        </h2>
+        <p class="lead">
+          {en
+            ? 'The first target is a store with one register, local operation, ticket needs and inventory pain.'
+            : 'El primer objetivo es una tienda con una caja, operación local, necesidad de ticket y dolor de inventario.'}
+        </p>
+      </div>
+      <div class="detail-panel">
+        <h3 class="h5">{en ? 'Ideal segments' : 'Segmentos ideales'}</h3>
+        <div class="meta-row large-tags">
+          {segments.map((segment) => <span>{segment}</span>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="fresh-plans">
+    <div class="section-heading">
+      <p class="section-kicker">{en ? 'Commercial path' : 'Ruta comercial'}</p>
+      <h2 id="fresh-plans">{en ? 'Start local, grow with modules.' : 'Empezar local, crecer con módulos.'}</h2>
+    </div>
+    <div class="resource-grid">
+      {plans.map((plan) => (
+        <article class="resource-card fresh-plan-card">
+          <p class="status-pill">{plan.name}</p>
+          <h3>{plan.name}</h3>
+          <p>{en && plan.summaryEn ? plan.summaryEn : plan.summary}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section-tint" aria-labelledby="fresh-roadmap">
+    <div class="section-heading split-heading">
+      <div>
+        <p class="section-kicker">Roadmap</p>
+        <h2 id="fresh-roadmap">{en ? 'A product path beyond the first POS.' : 'Una ruta de producto más allá del primer POS.'}</h2>
+      </div>
+      <p>
+        {en
+          ? 'The strategy avoids premature complexity: local desktop first, then cloud, AI, fiscal and mobile companion.'
+          : 'La estrategia evita complejidad prematura: desktop local primero, luego nube, IA, fiscal y mobile companion.'}
+      </p>
+    </div>
+    <div class="timeline-list">
+      {roadmap.map(([title, copy], index) => (
+        <article class="timeline-item fresh-roadmap-item">
+          <p class="status-pill">{String(index + 1).padStart(2, '0')}</p>
+          <h2>{title}</h2>
+          <p>{copy}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="fresh-stack">
+    <div class="two-panel">
+      <div>
+        <p class="section-kicker">Stack</p>
+        <h2 id="fresh-stack">{en ? 'Desktop architecture prepared for production delivery.' : 'Arquitectura desktop preparada para entrega productiva.'}</h2>
+        <p class="lead">
+          {en
+            ? 'The product is built as an Electron desktop application with React, TypeScript and a local SQLite data model, with release automation and future cloud extension points.'
+            : 'El producto está construido como aplicación desktop Electron con React, TypeScript y modelo local SQLite, con automatización de release y puntos de extensión hacia nube.'}
+        </p>
+      </div>
+      <div class="detail-panel">
+        <h3 class="h5">{en ? 'Technical base' : 'Base técnica'}</h3>
+        <div class="meta-row large-tags">
+          {stack.map((item) => <span>{item}</span>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-tint" aria-labelledby="fresh-links">
+    <div class="section-heading">
+      <p class="section-kicker">{en ? 'Product links' : 'Enlaces del producto'}</p>
+      <h2 id="fresh-links">{en ? 'Support, privacy and terms.' : 'Soporte, privacidad y términos.'}</h2>
+    </div>
+    <div class="link-grid">
+      {product.downloadUrl && (
+        <a href={product.downloadUrl} download>
+          {en ? 'Download Windows demo' : 'Descargar demo Windows'}
+        </a>
+      )}
+      <a href={lp(`/support/${product.slug}`)}>{en ? 'Support and FAQ' : 'Soporte y FAQ'}</a>
+      <a href={lp(`/privacy/${product.slug}`)}>{en ? 'Privacy Policy' : 'Política de Privacidad'}</a>
+      <a href={lp(`/terms/${product.slug}`)}>{en ? 'Terms of Use' : 'Términos de Uso'}</a>
+    </div>
+  </section>
+
+  <CTA
+    kicker={en ? 'Fresh-Pos demo' : 'Demo Fresh-Pos'}
+    title={en ? 'Download the Windows demo or request a guided review.' : 'Descarga el demo Windows o solicita una revisión guiada.'}
+    body={en ? 'Use the demo to validate the counter workflow, then share your business type, product volume and hardware context for a focused walkthrough.' : 'Usa el demo para validar el flujo de caja y después comparte el giro, volumen de productos y contexto de hardware para una revisión enfocada.'}
+    primaryHref={product.downloadUrl ?? mailto(site.emails.contact, en ? 'Fresh-Pos demo' : 'Demo Fresh-Pos')}
+    primaryLabel={product.downloadUrl ? (en ? 'Download demo' : 'Descargar demo') : site.emails.contact}
+    secondaryHref={lp(`/support/${product.slug}`)}
+    secondaryLabel={en ? 'Review FAQ' : 'Revisar FAQ'}
+  />
+</SiteLayout>

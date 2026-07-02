@@ -1,6 +1,6 @@
 ---
 import SiteLayout from '../../layouts/SiteLayout.astro';
-import { apps } from '../../data/apps';
+import { products } from '../../data/products';
 import { getLangFromUrl, getLocalizedPath } from '../../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
@@ -10,19 +10,19 @@ const lp = (p: string) => getLocalizedPath(p, lang);
 
 <SiteLayout
   title="Terms — Sergio Anastacio"
-  description={en ? 'General terms and terms of use by app.' : 'Términos generales y términos de uso por app.'}
+  description={en ? 'General terms and terms of use by product.' : 'Términos generales y términos de uso por producto.'}
   path={Astro.url.pathname}
 >
   <section class="page-hero">
     <p class="eyebrow">{en ? 'Terms' : 'Términos'}</p>
     <h1>{en ? 'Terms of use.' : 'Términos de uso.'}</h1>
-    <p>{en ? 'Review general terms and app-specific terms.' : 'Consulta términos generales y términos específicos por app.'}</p>
+    <p>{en ? 'Review general terms and product-specific terms.' : 'Consulta términos generales y términos específicos por producto.'}</p>
   </section>
 
   <section class="section compact-section">
     <div class="link-grid">
       <a href={lp('/legal')}>{en ? 'General Legal Information' : 'Información Legal General'}</a>
-      {apps.map((app) => <a href={lp(`/terms/${app.slug}`)}>{app.name} {en ? 'Terms of Use' : 'Términos de Uso'}</a>)}
+      {products.map((product) => <a href={lp(`/terms/${product.slug}`)}>{product.name} {en ? 'Terms of Use' : 'Términos de Uso'}</a>)}
     </div>
   </section>
 </SiteLayout>

@@ -1,0 +1,123 @@
+---
+import CTA from '../CTA.astro';
+import FreshPosLanding from './FreshPosLanding.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import type { ProductInfo } from '../../data/products';
+import { getProductDescription, getProductFeatures, getProductTagline } from '../../data/products';
+import { mailto, site } from '../../data/site';
+import { getLangFromUrl, getLocalizedPath } from '../../i18n/utils';
+
+interface Props {
+  product: ProductInfo;
+}
+
+const { product } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const en = lang === 'en';
+const lp = (p: string) => getLocalizedPath(p, lang);
+const title = `${product.name} — Sergio Anastacio Products`;
+const statusLabel = product.concept
+  ? en ? 'Concept · Not published' : 'Concepto · No publicado'
+  : en && product.statusNoteEn
+    ? product.statusNoteEn
+    : product.statusNote ?? product.status;
+const features = getProductFeatures(product, en);
+---
+
+{product.slug === 'fresh-pos' ? (
+  <FreshPosLanding product={product} />
+) : (
+  <SiteLayout title={title} description={getProductDescription(product, en)} path={Astro.url.pathname}>
+    <section class="page-hero app-hero">
+      <p class="eyebrow">{statusLabel}</p>
+      <h1>{product.name}</h1>
+      <p>{getProductTagline(product, en)}</p>
+      {
+        product.concept && (
+          <p class="concept-notice">
+            {en
+              ? 'This product is still a concept. Features, platforms and policies will be updated before release.'
+              : 'Este producto sigue en concepto. Funciones, plataformas y políticas se actualizarán antes de publicar.'}
+          </p>
+        )
+      }
+      <div class="hero-actions">
+        {
+          product.appStoreUrl ? (
+            <a class="primary-link" href={product.appStoreUrl} rel="noopener" target="_blank">
+              {en ? 'Download on the App Store' : 'Descargar en App Store'}
+            </a>
+          ) : product.platforms.includes('iOS') ? (
+            <span class="disabled-link">{en ? 'App Store link pending release' : 'App Store disponible al release'}</span>
+          ) : null
+        }
+        {
+          product.googlePlayUrl ? (
+            <a class="primary-link" href={product.googlePlayUrl} rel="noopener" target="_blank">
+              {en ? 'Get it on Google Play' : 'Disponible en Google Play'}
+            </a>
+          ) : product.platforms.includes('Android') ? (
+            <span class="disabled-link">{en ? 'Google Play link pending release' : 'Google Play disponible al release'}</span>
+          ) : null
+        }
+        {
+          product.downloadUrl ? (
+            <a class="primary-link" href={product.downloadUrl} download>
+              {en ? 'Download' : 'Descargar'}
+            </a>
+          ) : product.platforms.includes('Windows') ? (
+            <span class="disabled-link">{en ? 'Windows installer pending release' : 'Instalador Windows disponible al release'}</span>
+          ) : null
+        }
+      </div>
+    </section>
+
+    <section class="section two-panel" aria-labelledby="product-overview">
+      <div>
+        <p class="section-kicker">{en ? 'Overview' : 'Resumen'}</p>
+        <h2 id="product-overview">{en ? 'What it is' : 'Qué es'}</h2>
+        <p class="lead">{getProductDescription(product, en)}</p>
+      </div>
+      <div class="detail-panel">
+        <h3 class="h5">{en ? 'Category' : 'Categoría'}</h3>
+        <p>{product.category}</p>
+        <h3 class="h5">{en ? 'Platforms' : 'Plataformas'}</h3>
+        <div class="meta-row">
+          {product.platforms.map((platform) => <span>{platform}</span>)}
+        </div>
+        <h3 class="h5">{en ? 'Status' : 'Estado'}</h3>
+        <p>{statusLabel}</p>
+      </div>
+    </section>
+
+    <section class="section section-tint" aria-labelledby="features-title">
+      <div class="section-heading">
+        <p class="section-kicker">{en ? 'Features' : 'Funciones'}</p>
+        <h2 id="features-title">{en ? 'Planned core features.' : 'Funciones principales planeadas.'}</h2>
+      </div>
+      <div class="feature-grid">
+        {features.map((feature) => <article class="feature-card"><p>{feature}</p></article>)}
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="product-links-title">
+      <div class="section-heading">
+        <p class="section-kicker">{en ? 'Links' : 'Enlaces'}</p>
+        <h2 id="product-links-title">{en ? 'Public product links.' : 'Enlaces públicos del producto.'}</h2>
+      </div>
+      <div class="link-grid">
+        <a href={lp(`/privacy/${product.slug}`)}>{en ? 'Privacy Policy' : 'Política de Privacidad'}</a>
+        <a href={lp(`/terms/${product.slug}`)}>{en ? 'Terms of Use' : 'Términos de Uso'}</a>
+        <a href={lp(`/support/${product.slug}`)}>{en ? 'Support' : 'Soporte'}</a>
+      </div>
+    </section>
+
+    <CTA
+      kicker={en ? 'Product Support' : 'Soporte de producto'}
+      title={en ? `Support for ${product.name}` : `Soporte para ${product.name}`}
+      body={en ? 'For questions, reports or privacy info, write to the support email.' : 'Para dudas, reportes o información de privacidad, escribe al correo de soporte.'}
+      primaryHref={mailto(site.emails.support, `Soporte ${product.name}`)}
+      primaryLabel={site.emails.support}
+    />
+  </SiteLayout>
+)}
